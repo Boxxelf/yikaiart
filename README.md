@@ -1,5 +1,7 @@
 # Yi Kai Art
 
+https://boxxelf.github.io/yikaiart/
+
 An English-language portfolio for Chinese-American contemporary artist Yi Kai. Built from the artist's 113 supplied works and biography, following the approved Works / About specification.
 
 ## Run locally
