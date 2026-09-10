@@ -1,0 +1,30 @@
+import { chromium } from '@playwright/test';
+import assert from 'node:assert/strict';
+const base = process.argv[2]?.replace(/\/$/, '');
+if (!base) throw new Error('Pass the complete site base URL.');
+const browser = await chromium.launch({ channel: 'chrome', args: ['--enable-webgl', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
+try {
+  const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
+  const failures = [];
+  page.on('pageerror', e => failures.push(e.message));
+  page.on('response', r => { if (r.status() >= 400 && r.url().startsWith(base)) failures.push(`${r.status()} ${r.url()}`); });
+  await page.goto(`${base}/works/`, { waitUntil: 'networkidle' });
+  assert.equal(await page.locator('.work-label h2').innerText(), 'The Fragmented Self');
+  await page.getByRole('button', { name: 'View work', exact: true }).click();
+  await page.locator('.detail-art img').waitFor({ state: 'visible' });
+  await page.waitForFunction(() => { const image = document.querySelector('.detail-art img'); return image instanceof HTMLImageElement && image.complete && image.naturalWidth > 0; });
+  await page.keyboard.press('Escape');
+  await page.goto(`${base}/about/?chapter=index`, { waitUntil: 'networkidle' });
+  await page.locator('.reader-index a').first().waitFor();
+  assert.equal(await page.locator('.reader-index a').count(), 6);
+  await page.locator('.reader-index a').last().click();
+  await page.locator('.archive-work').first().waitFor();
+  assert.equal(await page.locator('.archive-work').count(), 19);
+  await page.reload({ waitUntil: 'networkidle' });
+  assert.equal(await page.locator('.archive-work').count(), 19);
+  const bio = await page.request.get(`${base}/biography.html`);
+  assert.equal(bio.status(), 200);
+  assert((await bio.text()).includes('March 11, 1990'));
+  assert.deepEqual(failures, []);
+  console.log(`Verified ${base}: Works, complete artwork, About, six Index links, 19 Land works, reload, text biography, and no failed first-party resources.`);
+} finally { await browser.close(); }

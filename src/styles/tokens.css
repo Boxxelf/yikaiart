@@ -1,0 +1,14 @@
+:root {
+  --paper: #F3EADB;
+  --paper-light: #FCFAF5;
+  --ink: #181613;
+  --vermilion: #B94132;
+  --ultramarine: #183F72;
+  --moss: #7C8569;
+  --focus: #4D6C97;
+  --muted: #625D55;
+  --line: #D7D0C5;
+  --sans: 'Instrument Sans Variable', Helvetica, sans-serif;
+  --serif: 'Source Serif 4 Variable', Georgia, serif;
+  --edge: clamp(24px, 4.2vw, 80px);
+}

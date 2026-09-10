@@ -1,0 +1,7 @@
+{
+  "framework": "vite",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "rewrites": [{ "source": "/((?!assets/|art/|photos/|covers/|favicon.svg|biography.html).*)", "destination": "/index.html" }],
+  "headers": [{ "source": "/art/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=86400" }] }]
+}
