@@ -78,3 +78,29 @@ Import the `Boxxelf/yikaiart` repository into Vercel using its Vite preset. `ver
 ## Accessibility and resource use
 
 On mobile, reduced-motion settings or unavailable WebGL, the same works and chapters remain available in 2D. Native HTML dialogs provide focus containment and Escape handling. Written content stays in HTML, including full biography and chapter text. Only the twelve selected works enter the ring atlas; the 113-work archive loads ordinary images on demand. The scenes pause rendering when the tab is hidden or a reading/detail dialog is open.
+
+## Memories
+
+`/memories` places an opaque vintage CRT computer on a transparent canvas beside a four-photo-per-spread album. Click or keyboard-activate a photograph to start its 2.8-second insertion and screen reveal directly; dragging a print into the slot also works. During an insertion, further choices keep only the latest photo in the queue. The card lifts from the clicked print, arcs toward the slot, and slides in as the screen reveals its photograph and English description.
+
+Drag the computer horizontally to rotate it through 360 degrees, or vertically with a mouse to tilt it. Touch surfaces allow horizontal rotation and vertical page scrolling. Rotate-left/right buttons and Reset view offer keyboard alternatives. The screen stays attached to its housing and is hidden behind the computer; a tap opens the enlarged reader, while a drag never does. Insertion gently returns the computer to the front. Replay, Skip animation and previous/next memory controls remain available. On narrower screens the album sits below the computer. Direct links use `/memories?photo=<id>`.
+
+Rendering stops when the scene is stationary, offscreen or behind the reader. Shadow maps update during card movement only; displayed album photos are prefetched. Production builds copy the validated art and Memories catalogues, excluding unreferenced sync-conflict image duplicates without modifying source files.
+
+The archive contains 28 images: 27 photographs and one exhibition poster. Handwritten notes I and II and their generated web assets were removed as requested. Descriptions are English only; original captions and review notes remain in the source catalogue for provenance. English captions use neutral wording where identities or source descriptions are uncertain. No uncertain identity was inferred from a face.
+
+Regenerate the 400px thumbnails and 1600px display images without changing the originals:
+
+```sh
+npm run prepare:memories -- '/path/to/Photos of Openings'
+```
+
+The 56 Memories derivatives retain the supplied photos and poster. Images retain their aspect ratio and are never enlarged beyond the original resolution. The build validates all memory IDs, category counts, captions and image paths. The computer and animation are authored for this site, informed by [Gemos Still](https://github.com/duoduoaiduoduo/gemos-still); no reference branding, demo media, reconstruction models or application source were copied. There is no Gaussian reconstruction, upload, export or film generation. WebGL failure falls back to a CSS computer, and reduced-motion preferences skip the insertion animation while keeping the same content and controls.
+
+## Reviews and Collections
+
+Reviews presents 13 attributed perspectives from 1987–2015 as brief English editorial or translated summaries. The paper index and reader link to the original source; a single short quotation is labeled as a quotation. Direct entries use `/reviews?review=<id>&read=1`.
+
+Collections contains 16 holdings from Yi Kai Studio and all 10 supplied additional photographs in a separate **From the archive** section. Every added photograph has an English introduction. Filter holdings by institution, gallery, corporate/hospitality or private ownership; click any image for a full-proportion reader with zoom and previous/next navigation. Direct entries use `/collections?collection=<id>`, with optional `type` filters. Both routes have static entry files for refreshes.
+
+The 26 images have 680px thumbnails and display derivatives bounded to 1800px, with no upscaling. Build validation verifies 52 image assets and English archive captions. Original photographs are unchanged. See [caption inventory](docs/collection-additional-photos.md) and [design document](docs/reviews-collections-design.md). To regenerate, run `npm run prepare:collections -- <downloaded-source-directory> <additional-photo-directory>`; the first directory should contain `images.json` (source URL list) and numbered `collection-01.*` through `collection-16.*` originals. Source image URLs are also retained in `src/content/holdings.json`.

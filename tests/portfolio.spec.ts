@@ -26,6 +26,29 @@ test('Works: renders art, navigation, metadata and complete original detail', as
   await expect(page.getByRole('button', { name: 'View work', exact: true })).toBeFocused();
 });
 
+test('Works opening completes, replays on entry, and preserves direct artwork links', async ({ page }) => {
+  await page.goto('/works');
+  const ring = page.locator('.works-canvas');
+  await expect(ring).toHaveAttribute('data-intro', 'true');
+  await expect(page.getByRole('button', { name: 'Next featured work' })).toBeHidden();
+  await expect(ring).toHaveAttribute('data-intro', 'false');
+  await expect(page.locator('.works-intro-title')).toHaveCSS('opacity', '0');
+  await page.getByRole('button', { name: 'Next featured work' }).click();
+  await expect(page.locator('.work-label h2')).toHaveText('Couple in Red');
+  await page.getByRole('button', { name: 'View work', exact: true }).click();
+  const artworkUrl = page.url();
+  await page.reload();
+  await expect(page.getByRole('dialog')).toBeVisible();
+  await expect(ring).toHaveAttribute('data-intro', 'false');
+  await page.keyboard.press('Escape');
+  await expect(page.getByRole('dialog')).toHaveCount(0);
+  await page.getByRole('link', { name: 'About', exact: true }).click();
+  await page.getByRole('link', { name: 'Works', exact: true }).click();
+  await expect(ring).toHaveAttribute('data-intro', 'true');
+  await expect(ring).toHaveAttribute('data-intro', 'false');
+  expect(artworkUrl).toContain('work=');
+});
+
 test('Archive: 113 works, six complete collections, fractional and feet dimensions', async ({ page }) => {
   await page.goto('/works?view=archive');
   await expect(page.locator('.archive-work')).toHaveCount(113);
@@ -88,6 +111,7 @@ test('Mobile: real works, swiping, books, reading, no horizontal overflow', asyn
   await page.getByRole('button',{name:'Series',exact:false}).first().click();
   await page.locator('.mobile-series').getByRole('button',{name:/LAND/}).click();
   await expect(page.locator('.archive-work')).toHaveCount(19);
+  await page.getByRole('button',{name:'Menu'}).click();
   await page.getByRole('link',{name:'About',exact:true}).click();
   await expect(page.locator('.book-catalogue-item')).toHaveCount(7);
   await expect.poll(() => page.locator('.book-cover').first().evaluate(el => el.tagName)).toBe('IMG');

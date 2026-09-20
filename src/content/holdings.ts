@@ -1,0 +1,10 @@
+import collectionData from './holdings.json';
+import archiveData from './collection-archive.json';
+export type HoldingCategory='institution'|'gallery'|'corporate'|'private'|'archive';
+export type Holding={id:string;title:string;kind:'holding'|'archive';category:HoldingCategory;collector:string;location:string;medium:string;dimensions:string;date:string;description:string;documentType?:string;source:string;sourceFilename:string;alt:string;image:{thumbnail:string;display:string;width:number;height:number}};
+export const holdings=collectionData as Holding[];
+export const collectionArchive=archiveData as Holding[];
+export const allHoldings=[...holdings,...collectionArchive];
+export const featuredHolding=holdings.find(h=>h.id==='forever')!;
+export const collectionFilters=[{id:'all',label:'All'},{id:'institution',label:'Museums & Universities'},{id:'gallery',label:'Galleries'},{id:'corporate',label:'Corporate & Hospitality'},{id:'private',label:'Private'}] as const;
+export const collectionAsset=(path:string)=>`${import.meta.env.BASE_URL}${path}`;

@@ -1,0 +1,562 @@
+[
+  {
+    "id": "houston-2026",
+    "sourceFilename": "194.JPG",
+    "kind": "photo",
+    "year": 2026,
+    "dateSource": "照片；2026（说明及画面）",
+    "location": "Houston, Texas",
+    "title": "A family gathering",
+    "description": "With family and guests at the National ACE Annual Conference in Houston, Texas.",
+    "descriptionOriginal": "2026 兒子的太太一家和我們在休士頓全美亚洲商会年會上与台灣來美的宇航人林博士夫妇合影。兒媳的姑姑是全美商会會長，姑夫是原美國交通部副部長。明年年會9/10/2027在洛杉磯辦",
+    "alt": "A family gathering — archival photograph",
+    "reviewStatus": "source-mapped",
+    "reviewNotes": "2027 年活动信息仅保留于原说明，主图注建议聚焦当时的合影。",
+    "image": {
+      "thumbnail": "memories/houston-2026-thumb.webp",
+      "display": "memories/houston-2026-display.webp",
+      "width": 5712,
+      "height": 4284
+    }
+  },
+  {
+    "id": "st-paul-01",
+    "sourceFilename": "1990b(1).jpg",
+    "kind": "photo",
+    "year": 1990,
+    "dateSource": "照片；1990（说明）",
+    "location": "St. Paul, Minnesota",
+    "title": "An opening in St. Paul",
+    "description": "With a guest at the opening of a solo exhibition in St. Paul, Minnesota.",
+    "descriptionOriginal": "与中文顾问处主任[姓名不清]先生，在1990年 one man show in St. Paul, MN",
+    "alt": "An opening in St. Paul — archival photograph",
+    "reviewStatus": "needs-review",
+    "reviewNotes": "姓名不清；职务表述保留原文，发布时不猜写姓名。",
+    "image": {
+      "thumbnail": "memories/st-paul-01-thumb.webp",
+      "display": "memories/st-paul-01-display.webp",
+      "width": 3092,
+      "height": 2324
+    }
+  },
+  {
+    "id": "st-paul-02",
+    "sourceFilename": "1990b(2).jpg",
+    "kind": "photo",
+    "year": 1990,
+    "dateSource": "照片；1990（说明）",
+    "location": "",
+    "title": "Visitors at the exhibition",
+    "description": "A visitor at the 1990 solo exhibition.",
+    "descriptionOriginal": "美国副总领事夫人[姓名不清]参观1990年 one man show",
+    "alt": "Visitors at the exhibition — archival photograph",
+    "reviewStatus": "needs-review",
+    "reviewNotes": "姓名不清；原有照片内印字保留。",
+    "image": {
+      "thumbnail": "memories/st-paul-02-thumb.webp",
+      "display": "memories/st-paul-02-display.webp",
+      "width": 2772,
+      "height": 1952
+    }
+  },
+  {
+    "id": "st-paul-03",
+    "sourceFilename": "1990c.jpg",
+    "kind": "photo",
+    "year": 1990,
+    "dateSource": "照片；1990（说明）",
+    "location": "",
+    "title": "Friends at the opening",
+    "description": "With guests at the opening of the 1990 solo exhibition.",
+    "descriptionOriginal": "与美中友协主席[姓名不清]、[姓名不清]，1990年 one man show",
+    "alt": "Friends at the opening — archival photograph",
+    "reviewStatus": "needs-review",
+    "reviewNotes": "两处姓名不清。",
+    "image": {
+      "thumbnail": "memories/st-paul-03-thumb.webp",
+      "display": "memories/st-paul-03-display.webp",
+      "width": 3104,
+      "height": 2208
+    }
+  },
+  {
+    "id": "mia-01",
+    "sourceFilename": "1995a.jpg",
+    "kind": "photo",
+    "year": 1995,
+    "dateSource": "照片；1995（文件名）",
+    "location": "Minneapolis",
+    "title": "An evening at MIA",
+    "description": "With the museum director at a group exhibition opening at the Minneapolis Institute of Arts.",
+    "descriptionOriginal": "与明尼阿波利斯艺术馆馆长艾文，在 MIA Group show opening",
+    "alt": "An evening at MIA — archival photograph",
+    "reviewStatus": "needs-review",
+    "reviewNotes": "日期来自文件名；“艾文”的英文拼写待核对。",
+    "image": {
+      "thumbnail": "memories/mia-01-thumb.webp",
+      "display": "memories/mia-01-display.webp",
+      "width": 2768,
+      "height": 1832
+    }
+  },
+  {
+    "id": "mia-02",
+    "sourceFilename": "1995b.jpg",
+    "kind": "photo",
+    "year": 1995,
+    "dateSource": "照片；1995（文件名）",
+    "location": "",
+    "title": "Talking about making art",
+    "description": "A conversation with a fellow exhibitor about their creative work at the group exhibition opening.",
+    "descriptionOriginal": "与 Group show 合作者 Joe Arken 在 opening 上交谈创作经验",
+    "alt": "Talking about making art — archival photograph",
+    "reviewStatus": "source-mapped",
+    "reviewNotes": "Joe Arken 按原文存档，英文发布稿前核对拼写。",
+    "image": {
+      "thumbnail": "memories/mia-02-thumb.webp",
+      "display": "memories/mia-02-display.webp",
+      "width": 2884,
+      "height": 2116
+    }
+  },
+  {
+    "id": "mia-03",
+    "sourceFilename": "1995c.jpg",
+    "kind": "photo",
+    "year": 1995,
+    "dateSource": "照片；1995（文件名）",
+    "location": "Minneapolis",
+    "title": "With “The Door”",
+    "description": "A photograph with the work “The Door” at the MIA group exhibition.",
+    "descriptionOriginal": "MIA Group 展作品《门》合影",
+    "alt": "With “The Door” — archival photograph",
+    "reviewStatus": "source-mapped",
+    "reviewNotes": "作品名《门》来自说明。",
+    "image": {
+      "thumbnail": "memories/mia-03-thumb.webp",
+      "display": "memories/mia-03-display.webp",
+      "width": 2620,
+      "height": 2272
+    }
+  },
+  {
+    "id": "hong-kong-1998",
+    "sourceFilename": "1998a.jpg",
+    "kind": "photo",
+    "year": 1998,
+    "dateSource": "照片；1998（文件名）",
+    "location": "Hong Kong",
+    "title": "An opening in Hong Kong",
+    "description": "Guests at the opening of a solo exhibition at Alisan Fine Arts in Hong Kong.",
+    "descriptionOriginal": "于香港艺倡 one man show，金董建平女士和先生、银行总裁出席开幕式。",
+    "alt": "An opening in Hong Kong — archival photograph",
+    "reviewStatus": "source-mapped",
+    "reviewNotes": "保留嘉宾信息；英文机构名、人名待规范。",
+    "image": {
+      "thumbnail": "memories/hong-kong-1998-thumb.webp",
+      "display": "memories/hong-kong-1998-display.webp",
+      "width": 2316,
+      "height": 1660
+    }
+  },
+  {
+    "id": "hong-kong-2000",
+    "sourceFilename": "2000.jpg",
+    "kind": "photo",
+    "year": 2000,
+    "dateSource": "照片；2000（文件名）",
+    "location": "Hong Kong",
+    "title": "A visit to the exhibition",
+    "description": "The U.S. Consul General in Hong Kong attends a solo exhibition opening with the gallery host.",
+    "descriptionOriginal": "美国驻香港总领事与金董建平女士参加 one man show opening  [下方注释字迹不清]",
+    "alt": "A visit to the exhibition — archival photograph",
+    "reviewStatus": "needs-review",
+    "reviewNotes": "下方注释字迹不清，不补全。",
+    "image": {
+      "thumbnail": "memories/hong-kong-2000-thumb.webp",
+      "display": "memories/hong-kong-2000-display.webp",
+      "width": 2682,
+      "height": 1660
+    }
+  },
+  {
+    "id": "lancaster-01",
+    "sourceFilename": "2014a.JPG",
+    "kind": "photo",
+    "year": 2014,
+    "dateSource": "照片；2014（文件名）",
+    "location": "Lancaster, California",
+    "title": "Together in Lancaster",
+    "description": "At the opening of the solo exhibition in Lancaster.",
+    "descriptionOriginal": "Lancaster one man show opening",
+    "alt": "Together in Lancaster — archival photograph",
+    "reviewStatus": "source-mapped",
+    "reviewNotes": "文档扩展名为 .jpg，实际 .JPG。",
+    "image": {
+      "thumbnail": "memories/lancaster-01-thumb.webp",
+      "display": "memories/lancaster-01-display.webp",
+      "width": 4000,
+      "height": 3000
+    }
+  },
+  {
+    "id": "lancaster-02",
+    "sourceFilename": "2014c.jpg",
+    "kind": "photo",
+    "year": 2014,
+    "dateSource": "照片；2014（文件名）",
+    "location": "Lancaster, California",
+    "title": "A moment at the opening",
+    "description": "A photograph from the Lancaster solo exhibition opening.",
+    "descriptionOriginal": "Lancaster one man show opening",
+    "alt": "A moment at the opening — archival photograph",
+    "reviewStatus": "source-mapped",
+    "reviewNotes": "仅 363 × 288px，不强行放大至高清。",
+    "image": {
+      "thumbnail": "memories/lancaster-02-thumb.webp",
+      "display": "memories/lancaster-02-display.webp",
+      "width": 363,
+      "height": 288
+    }
+  },
+  {
+    "id": "lancaster-poster",
+    "sourceFilename": "2014d.jpg",
+    "kind": "exhibition-material",
+    "year": 2014,
+    "dateSource": "展览海报；2014（海报）",
+    "location": "Lancaster, California",
+    "title": "Selected paintings and works on paper",
+    "description": "Opening reception poster for Yi Kai: Selected Paintings and Works on Paper at the Museum of Art and History, Lancaster. March 29, 2014.",
+    "descriptionOriginal": "Yi Kai Selected Paintings and Works on Paper 展览开幕海报。",
+    "alt": "Selected paintings and works on paper — exhibition poster",
+    "reviewStatus": "source-mapped",
+    "reviewNotes": "无独立 DOCX 图注；建议描述：Yi Kai Selected Paintings and Works on Paper 展览开幕海报。依据海报可见文字。",
+    "image": {
+      "thumbnail": "memories/lancaster-poster-thumb.webp",
+      "display": "memories/lancaster-poster-display.webp",
+      "width": 2550,
+      "height": 1653
+    }
+  },
+  {
+    "id": "guangzhou-2015",
+    "sourceFilename": "2015 b.JPG",
+    "kind": "photo",
+    "year": 2015,
+    "dateSource": "照片；2015（文件名）",
+    "location": "Guangzhou",
+    "title": "The travelling exhibition",
+    "description": "The opening at 53 Art Museum in Guangzhou, part of an exhibition travelling between Claremont Graduate University, Alisan Fine Arts and Guangzhou.",
+    "descriptionOriginal": "Claremont graduate University, 香港艺倡, 广州53美术馆巡展，53美术馆 opening。",
+    "alt": "The travelling exhibition — archival photograph",
+    "reviewStatus": "source-mapped",
+    "reviewNotes": "对应文档 2015b.jpg；保留原文件名空格。",
+    "image": {
+      "thumbnail": "memories/guangzhou-2015-thumb.webp",
+      "display": "memories/guangzhou-2015-display.webp",
+      "width": 3264,
+      "height": 2448
+    }
+  },
+  {
+    "id": "claremont-2015",
+    "sourceFilename": "2015a.JPG",
+    "kind": "photo",
+    "year": 2015,
+    "dateSource": "照片；2015（说明）",
+    "location": "Claremont, California",
+    "title": "An opening at Claremont",
+    "description": "The Claremont Graduate University opening of the 2015 travelling exhibition.",
+    "descriptionOriginal": "2015巡展，CGU opening",
+    "alt": "An opening at Claremont — archival photograph",
+    "reviewStatus": "source-mapped",
+    "reviewNotes": "对应文档 2015a.jpg。",
+    "image": {
+      "thumbnail": "memories/claremont-2015-thumb.webp",
+      "display": "memories/claremont-2015-display.webp",
+      "width": 3264,
+      "height": 2448
+    }
+  },
+  {
+    "id": "hong-kong-2015",
+    "sourceFilename": "2015c.JPG",
+    "kind": "photo",
+    "year": 2015,
+    "dateSource": "照片；2015（说明）",
+    "location": "Hong Kong",
+    "title": "The exhibition in Hong Kong",
+    "description": "At the Hong Kong opening of the 2015 travelling exhibition.",
+    "descriptionOriginal": "2015巡展，香港 opening",
+    "alt": "The exhibition in Hong Kong — archival photograph",
+    "reviewStatus": "source-mapped",
+    "reviewNotes": "对应文档 2015c.jpg。",
+    "image": {
+      "thumbnail": "memories/hong-kong-2015-thumb.webp",
+      "display": "memories/hong-kong-2015-display.webp",
+      "width": 3264,
+      "height": 2448
+    }
+  },
+  {
+    "id": "conversation-2015",
+    "sourceFilename": "2015d.JPG",
+    "kind": "photo",
+    "year": 2015,
+    "dateSource": "照片；2015（说明）",
+    "location": "Hong Kong",
+    "title": "In conversation",
+    "description": "In conversation with David Pagel at the Hong Kong opening in 2015.",
+    "descriptionOriginal": "与 David Pagel 对谈，在2015香港 opening",
+    "alt": "In conversation — archival photograph",
+    "reviewStatus": "source-mapped",
+    "reviewNotes": "David Pagel 来自原说明；对应文档 2015d.jpg。",
+    "image": {
+      "thumbnail": "memories/conversation-2015-thumb.webp",
+      "display": "memories/conversation-2015-display.webp",
+      "width": 3264,
+      "height": 2448
+    }
+  },
+  {
+    "id": "curating-2018",
+    "sourceFilename": "2018a.JPG",
+    "kind": "photo",
+    "year": 2018,
+    "dateSource": "照片；2018（文件名）",
+    "location": "",
+    "title": "Across institutions",
+    "description": "Organising and curating a group exhibition involving Claremont Graduate University and the Tianjin Academy of Fine Arts Museum.",
+    "descriptionOriginal": "组织策展：CGU、天津美术学院美术馆 Group show",
+    "alt": "Across institutions — archival photograph",
+    "reviewStatus": "source-mapped",
+    "reviewNotes": "策展角色按原说明整理，不扩写细节。",
+    "image": {
+      "thumbnail": "memories/curating-2018-thumb.webp",
+      "display": "memories/curating-2018-display.webp",
+      "width": 3264,
+      "height": 2448
+    }
+  },
+  {
+    "id": "visit-2023",
+    "sourceFilename": "2023b(2).jpg",
+    "kind": "photo",
+    "year": 2023,
+    "dateSource": "照片；2023（文件名）",
+    "location": "China",
+    "title": "A visit together",
+    "description": "Accompanying USC Roski School of Art and Design dean Haven Lin-Kirk on a visit in China.",
+    "descriptionOriginal": "Leading USC 艺术设计学院院长 Haven Lin-Kirk，[中国某美术学院]访问。",
+    "alt": "A visit together — archival photograph",
+    "reviewStatus": "source-mapped",
+    "reviewNotes": "对应文档 2023b.jpg；中国访问机构不明确。",
+    "image": {
+      "thumbnail": "memories/visit-2023-thumb.webp",
+      "display": "memories/visit-2023-display.webp",
+      "width": 1623,
+      "height": 1251
+    }
+  },
+  {
+    "id": "curating-2023",
+    "sourceFilename": "2023c(1).png",
+    "kind": "photo",
+    "year": 2023,
+    "dateSource": "照片；2023（文件名）",
+    "location": "",
+    "title": "Exhibitions and exchanges",
+    "description": "A photograph associated with curatorial work connecting CGU, USC, Tianjin and Guangzhou.",
+    "descriptionOriginal": "策展：CGU、USC、中国天津、广州展。",
+    "alt": "Exhibitions and exchanges — archival photograph",
+    "reviewStatus": "needs-review",
+    "reviewNotes": "对应文档 2023c.jpg；机构与展览关系按原文保留，具体展名待核对。",
+    "image": {
+      "thumbnail": "memories/curating-2023-thumb.webp",
+      "display": "memories/curating-2023-display.webp",
+      "width": 1193,
+      "height": 964
+    }
+  },
+  {
+    "id": "minnesota-collection",
+    "sourceFilename": "DSC_0057.jpg",
+    "kind": "photo",
+    "year": null,
+    "dateSource": "照片；未注年",
+    "location": "Minnesota",
+    "title": "In the museum collection",
+    "description": "A collection exhibition at the Minnesota Museum of American Art.",
+    "descriptionOriginal": "Mixture for ever 收藏展，Minnesota Museum of American Art。",
+    "alt": "In the museum collection — archival photograph",
+    "reviewStatus": "needs-review",
+    "reviewNotes": "展名 Mixture for ever 按原文保存，正式拼写待核对。",
+    "image": {
+      "thumbnail": "memories/minnesota-collection-thumb.webp",
+      "display": "memories/minnesota-collection-display.webp",
+      "width": 3180,
+      "height": 2354
+    }
+  },
+  {
+    "id": "collectors-2015",
+    "sourceFilename": "IMG_0090.jpg",
+    "kind": "photo",
+    "year": 2015,
+    "dateSource": "照片；2015（说明）",
+    "location": "Hong Kong",
+    "title": "With collectors",
+    "description": "With collectors at the Hong Kong exhibition opening in 2015.",
+    "descriptionOriginal": "与作品收藏者在2015香港 opening，编号35。",
+    "alt": "With collectors — archival photograph",
+    "reviewStatus": "source-mapped",
+    "reviewNotes": "编号 35 作为原说明记录，不当作本页排序号。",
+    "image": {
+      "thumbnail": "memories/collectors-2015-thumb.webp",
+      "display": "memories/collectors-2015-display.webp",
+      "width": 3196,
+      "height": 2208
+    }
+  },
+  {
+    "id": "alisan-anniversary-01",
+    "sourceFilename": "IMG_3608.jpg",
+    "kind": "photo",
+    "year": 2016,
+    "dateSource": "照片；2016（说明）",
+    "location": "Hong Kong",
+    "title": "A gallery anniversary",
+    "description": "With Alisan Fine Arts director Daphne King at the gallery’s 35th anniversary exhibition opening.",
+    "descriptionOriginal": "2016香港艺倡画廊 director Daphne King，in 艺倡画廊35周年展 opening。",
+    "alt": "A gallery anniversary — archival photograph",
+    "reviewStatus": "source-mapped",
+    "reviewNotes": "Daphne King 来自原文。",
+    "image": {
+      "thumbnail": "memories/alisan-anniversary-01-thumb.webp",
+      "display": "memories/alisan-anniversary-01-display.webp",
+      "width": 2820,
+      "height": 2448
+    }
+  },
+  {
+    "id": "alisan-anniversary-02",
+    "sourceFilename": "IMG_3623.jpg",
+    "kind": "photo",
+    "year": null,
+    "dateSource": "照片；未注年",
+    "location": "Hong Kong",
+    "title": "Celebrating the gallery",
+    "description": "With guests at the 35th anniversary exhibition opening of Alisan Fine Arts.",
+    "descriptionOriginal": "与董建华、金董建平、Steven King，in 艺倡画廊35周年展 opening。",
+    "alt": "Celebrating the gallery — archival photograph",
+    "reviewStatus": "source-mapped",
+    "reviewNotes": "说明只有 35 周年信息；不直接借用相邻照片年份。",
+    "image": {
+      "thumbnail": "memories/alisan-anniversary-02-thumb.webp",
+      "display": "memories/alisan-anniversary-02-display.webp",
+      "width": 3464,
+      "height": 1888
+    }
+  },
+  {
+    "id": "a-conversation",
+    "sourceFilename": "IMG_7581.jpg",
+    "kind": "photo",
+    "year": null,
+    "dateSource": "照片；未注年",
+    "location": "",
+    "title": "A conversation",
+    "description": "A black-and-white photograph of two people in conversation.",
+    "descriptionOriginal": "中国艺术大师刘海粟画，题字名在右上。（旁注：拜访）",
+    "alt": "A conversation — archival photograph",
+    "reviewStatus": "needs-review",
+    "reviewNotes": "图文疑点：实图为两人交谈，原文却提及画作和题字。建议临时标题为“交谈”，人物与拜访信息待核对。",
+    "image": {
+      "thumbnail": "memories/a-conversation-thumb.webp",
+      "display": "memories/a-conversation-display.webp",
+      "width": 3388,
+      "height": 2333
+    }
+  },
+  {
+    "id": "dolly-fiterman-01",
+    "sourceFilename": "IMG_7584.jpg",
+    "kind": "photo",
+    "year": 1999,
+    "dateSource": "照片；1999（说明）",
+    "location": "",
+    "title": "At Dolly Fiterman Gallery",
+    "description": "With a gallery guest at the 1999 solo exhibition at Dolly Fiterman Gallery.",
+    "descriptionOriginal": "与香港艺倡画廊主金董建平合影。1999年 one man show in Dolly Fiterman Gallery。",
+    "alt": "At Dolly Fiterman Gallery — archival photograph",
+    "reviewStatus": "source-mapped",
+    "reviewNotes": "文档名 IMG 7584.JPG；画廊／人名的英文拼写待整理，不凭照片识别人名。",
+    "image": {
+      "thumbnail": "memories/dolly-fiterman-01-thumb.webp",
+      "display": "memories/dolly-fiterman-01-display.webp",
+      "width": 2380,
+      "height": 2976
+    }
+  },
+  {
+    "id": "taiwan-1988",
+    "sourceFilename": "IMG_7587.jpg",
+    "kind": "photo",
+    "year": 1988,
+    "dateSource": "照片；1988（说明）",
+    "location": "Taiwan",
+    "title": "An opening in Taiwan",
+    "description": "With guests during a solo exhibition in Taiwan in 1988.",
+    "descriptionOriginal": "与[两位姓名不清]，1988年台湾个展时合影。",
+    "alt": "An opening in Taiwan — archival photograph",
+    "reviewStatus": "needs-review",
+    "reviewNotes": "文档名 IMG 7587 / 1988.JPG；两位姓名不清，保留待核对。",
+    "image": {
+      "thumbnail": "memories/taiwan-1988-thumb.webp",
+      "display": "memories/taiwan-1988-display.webp",
+      "width": 3397,
+      "height": 2427
+    }
+  },
+  {
+    "id": "dolly-fiterman-02",
+    "sourceFilename": "IMG_7590.jpg",
+    "kind": "photo",
+    "year": 1999,
+    "dateSource": "照片；1999（说明）",
+    "location": "",
+    "title": "Opening night",
+    "description": "The opening of a solo exhibition at Dolly Fiterman Gallery in 1999.",
+    "descriptionOriginal": "One man show opening in Dolly Fiterman Gallery, 1999.",
+    "alt": "Opening night — archival photograph",
+    "reviewStatus": "source-mapped",
+    "reviewNotes": "文档名 IMG 7590.JPG。",
+    "image": {
+      "thumbnail": "memories/dolly-fiterman-02-thumb.webp",
+      "display": "memories/dolly-fiterman-02-display.webp",
+      "width": 3054,
+      "height": 1830
+    }
+  },
+  {
+    "id": "dolly-fiterman-03",
+    "sourceFilename": "IMG_7591.jpg",
+    "kind": "photo",
+    "year": 1999,
+    "dateSource": "照片；1999（说明）",
+    "location": "",
+    "title": "Friends and visitors",
+    "description": "Visitors at the opening of the 1999 solo exhibition at Dolly Fiterman Gallery.",
+    "descriptionOriginal": "One man show opening in Dolly Fiterman Gallery, 1999.",
+    "alt": "Friends and visitors — archival photograph",
+    "reviewStatus": "source-mapped",
+    "reviewNotes": "文档名 IMG 7591.JPG。",
+    "image": {
+      "thumbnail": "memories/dolly-fiterman-03-thumb.webp",
+      "display": "memories/dolly-fiterman-03-display.webp",
+      "width": 3498,
+      "height": 2286
+    }
+  }
+]
