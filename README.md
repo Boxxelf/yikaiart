@@ -99,8 +99,19 @@ The 56 Memories derivatives retain the supplied photos and poster. Images retain
 
 ## Reviews and Collections
 
-Reviews presents 13 attributed perspectives from 1987–2015 as brief English editorial or translated summaries. The paper index and reader link to the original source; a single short quotation is labeled as a quotation. Direct entries use `/reviews?review=<id>&read=1`.
+Reviews presents 13 complete user-supplied perspectives from 1987–2015, preserving the original English and Chinese text, bylines and years. The aged newspaper page and enlarged reader show the full text with locally hosted imagery. No visitor links lead to the old website. Direct entries use `/reviews?review=<id>&read=1`.
 
-Collections contains 16 holdings from Yi Kai Studio and all 10 supplied additional photographs in a separate **From the archive** section. Every added photograph has an English introduction. Filter holdings by institution, gallery, corporate/hospitality or private ownership; click any image for a full-proportion reader with zoom and previous/next navigation. Direct entries use `/collections?collection=<id>`, with optional `type` filters. Both routes have static entry files for refreshes.
+Collections contains 16 holdings from Yi Kai Studio and all 10 supplied additional photographs in the prominent **From the archive** section before the holdings. Every added photograph has an English introduction. Filter holdings by institution, gallery, corporate/hospitality or private ownership; click any image for a full-proportion reader with zoom and previous/next navigation. Direct entries use `/collections?collection=<id>`, with optional `type` filters. Both routes have static entry files for refreshes.
 
 The 26 images have 680px thumbnails and display derivatives bounded to 1800px, with no upscaling. Build validation verifies 52 image assets and English archive captions. Original photographs are unchanged. See [caption inventory](docs/collection-additional-photos.md) and [design document](docs/reviews-collections-design.md). To regenerate, run `npm run prepare:collections -- <downloaded-source-directory> <additional-photo-directory>`; the first directory should contain `images.json` (source URL list) and numbered `collection-01.*` through `collection-16.*` originals. Source image URLs are also retained in `src/content/holdings.json`.
+
+
+### September 20 archive revision
+
+Reviews now uses aged newspaper stock and locally hosted review imagery; source-site exits are removed. All 13 reviews now contain the complete user-supplied text and original bylines, including four original Chinese reviews. The newspaper page and enlarged reader both show the complete articles with local imagery and related archival clippings.
+
+Collections starts with **From the archive**, including a selected document, its complete English introduction and a browsable strip of all ten documents. Holdings and their collection metadata remain further down the same page; all image readers stay on this site.
+
+Memories opens with a cloth-bound CSS 3D album. Click the cover to lift/open it, use page arrows or drag a page edge to turn leaves, and click a print to start the computer insertion. The enlarged CRT includes a simulated local browser with address field, back/forward history, reload, photograph navigation and the complete 28-photo directory. Closing the browser leaves the last viewed photograph on the computer. Reduced motion uses immediate transitions.
+
+About now uses the shared cream background and includes the complete supplied artist statement, collecting introduction and 90 career entries below the bookshelf. The desk album can be repositioned by mouse, touch or arrow keys; Home resets it. The Reviews reader navigation covers the full top edge while scrolling.

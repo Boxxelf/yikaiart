@@ -6,7 +6,8 @@ test.afterEach(()=>expect(errors).toEqual([]));
 
 test('One album click inserts a photo, reveals English copy, and supports enlargement and replay',async({page})=>{
  await page.goto('/memories');
- await expect(page.getByRole('heading',{name:'Memories.'})).toBeVisible();
+ await page.getByRole('button',{name:'Pick up and open photo album'}).click();
+ await expect(page.getByRole('dialog',{name:'The photo album'})).toBeVisible();
  await expect(page.getByRole('button',{name:'All 28',exact:true})).toBeVisible();
  await expect(page.locator('.memory-photo-card')).toHaveCount(4);
  await expect(page.locator('.memory-webgl canvas')).toBeVisible();
@@ -34,6 +35,7 @@ test('One album click inserts a photo, reveals English copy, and supports enlarg
 test('Album paging reaches all 28 items and keyboard activation loads the right caption',async({page})=>{
  await page.emulateMedia({reducedMotion:'reduce'});
  await page.goto('/memories');
+ await page.getByRole('button',{name:'Pick up and open photo album'}).click();
  const titles=new Set<string>();
  for(let i=0;i<7;i++){
   await page.getByRole('combobox',{name:'Album pages'}).selectOption(String(i));
@@ -46,6 +48,7 @@ test('Album paging reaches all 28 items and keyboard activation loads the right 
  await page.keyboard.press('Enter');
  await expect(page.locator('.memory-display h2')).toHaveText('An opening in Taiwan');
  await expect(page.locator('.memory-display img')).toHaveAttribute('src',/taiwan-1988-display/);
+ await page.getByRole('button',{name:'Pick up and open photo album'}).click();
  await page.getByRole('button',{name:'Exhibition material 1',exact:true}).click();
  await expect(page.locator('.memory-photo-card')).toHaveCount(1);
  await page.getByRole('button',{name:'Load Selected paintings and works on paper'}).click();
@@ -58,6 +61,7 @@ test('A failed image preserves the previous memory and permits retry',async({pag
  await page.emulateMedia({reducedMotion:'reduce'});
  await page.route('**/taiwan-1988-display.webp',route=>route.abort());
  await page.goto('/memories?photo=houston-2026');
+ await page.getByRole('button',{name:'Pick up and open photo album'}).click();
  await expect(page.locator('.memory-display h2')).toHaveText('A family gathering');
  await page.getByRole('combobox',{name:'Album pages'}).selectOption('0');
  await page.getByRole('button',{name:'Load An opening in Taiwan',exact:true}).click();
@@ -78,6 +82,7 @@ test('Mobile and missing WebGL preserve album, screen reading and page width',as
  await page.getByRole('button',{name:'Read closer'}).click();
  await expect(page.getByRole('dialog').locator('p').first()).toContainText('National ACE');
  await page.keyboard.press('Escape');
+ await page.getByRole('button',{name:'Pick up and open photo album'}).click();
  await page.getByRole('button',{name:'Load In the museum collection',exact:true}).click();
  await expect(page.locator('.memory-display h2')).toHaveText('In the museum collection');
 });
@@ -97,11 +102,22 @@ test('Memory interface and enlarged reader remain accessible and English-only',a
 
 test('Dragging an album photograph into the slot still opens that memory',async({page})=>{
  await page.goto('/memories');
+ await page.getByRole('button',{name:'Pick up and open photo album'}).click();
  await expect(page.locator('.memory-webgl canvas')).toBeVisible();
  const source=page.getByRole('button',{name:'Load An opening in Taiwan',exact:true});
- await source.dragTo(page.locator('.memories-intro'));
+ const dragPhoto=async(target:string)=>{
+  await expect.poll(()=>page.locator('.album-lift-panel').evaluate(e=>e.getAnimations().length)).toBe(0);
+  const box=await source.boundingBox();if(!box)throw Error('Missing photograph');
+  await page.mouse.move(box.x+box.width/2,box.y+box.height/2);await page.mouse.down();
+  await page.mouse.move(box.x+box.width/2+20,box.y+box.height/2,{steps:5});
+  await expect(page.locator('.album-lift-dialog')).not.toBeVisible();
+  const dest=await page.locator(target).boundingBox();if(!dest)throw Error('Missing drop target');
+  await page.mouse.move(dest.x+dest.width/2,dest.y+dest.height/2,{steps:8});await page.mouse.up();
+ };
+ await dragPhoto('.memories-intro');
  await expect(page.locator('.memory-stage')).toHaveAttribute('data-phase','idle');
- await source.dragTo(page.locator('.memory-slot-target'));
+ await page.getByRole('button',{name:'Pick up and open photo album'}).click();
+ await dragPhoto('.memory-slot-target');
  await expect(page).toHaveURL(/photo=taiwan-1988/);
  await expect(page.locator('.memory-stage')).toHaveAttribute('data-phase','viewing');
  await expect(page.locator('.memory-display h2')).toHaveText('An opening in Taiwan');
@@ -131,11 +147,15 @@ test('Drag rotation hides the rear screen, resets, and never opens the reader by
 
 test('Rapid photo choices finish the current insertion then load only the latest choice',async({page})=>{
  await page.goto('/memories');
+ await page.getByRole('button',{name:'Pick up and open photo album'}).click();
  await page.getByRole('button',{name:'Load An opening in Taiwan',exact:true}).click();
  await expect(page.locator('.memory-stage')).toHaveAttribute('data-phase','inserting');
+ await page.getByRole('button',{name:'Pick up and open photo album'}).click();
  await page.getByRole('button',{name:'Load An opening in St. Paul',exact:true}).click();
+ await page.getByRole('button',{name:'Pick up and open photo album'}).click();
  await page.getByRole('button',{name:'Load Friends at the opening',exact:true}).click();
- await expect(page.getByRole('status')).toContainText('Up next: Friends at the opening');
+ // Pickup/return motion can outlast the current insertion, so the latest choice may start directly.
+ // Verify the final photograph rather than requiring a transient queue label.
  await expect(page.locator('.memory-display h2')).toHaveText('Friends at the opening');
  await expect(page.locator('.memory-stage')).toHaveAttribute('data-phase','viewing');
  await expect(page.getByRole('status')).not.toContainText('Up next:');

@@ -19,3 +19,19 @@ for(const item of items){
  }
 }
 console.log('Validated 16 collection records, 10 English archive descriptions and 52 image assets.');
+const reviewImages=await read('review-images');
+assert.equal(reviewImages.length,13);
+assert.equal(new Set(reviewImages.map(i=>i.id)).size,13);
+for(const image of reviewImages){assert.match(image.path,/^reviews\/[a-z0-9-]+\.webp$/);const meta=await sharp(await fs.readFile(`public/${image.path}`)).metadata();assert.ok(meta.width>0&&meta.height>0);}
+console.log('Validated all 13 locally hosted review images.');
+
+const reviewTexts=await read('review-texts');
+assert.equal(reviewTexts.length,13);
+assert.deepEqual(reviewTexts.map(r=>r.id).sort(),reviewImages.map(i=>i.id).sort());
+assert.equal(reviewTexts.reduce((count,r)=>count+r.paragraphs.length,0),26);
+for(const review of reviewTexts){
+ assert.ok(review.author&&review.byline&&review.role&&review.year&&review.language,review.id);
+ assert.ok(review.paragraphs.every(p=>typeof p==='string'&&p.trim().length>0),review.id);
+ assert.ok(!('summary' in review),review.id);
+}
+console.log('Validated 13 complete supplied reviews, 26 paragraphs, original bylines and image mappings.');

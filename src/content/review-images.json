@@ -1,0 +1,67 @@
+[
+  {
+    "id": "tammi-schneider",
+    "source": "https://www.cgu.edu/wp-content/uploads/2016/11/Schneider_Tammi_1000.jpg",
+    "path": "reviews/tammi-schneider.webp"
+  },
+  {
+    "id": "alice-king",
+    "source": "https://yikaistudio.com/wp-content/uploads/2024/07/金董建平.jpg?wsr",
+    "path": "reviews/alice-king.webp"
+  },
+  {
+    "id": "david-pagel",
+    "source": "https://assets.podomatic.net/ts/a1/08/68/theconversationartpodcast/1400x1400_10411155.jpg",
+    "path": "reviews/david-pagel.webp"
+  },
+  {
+    "id": "andi-campognone",
+    "source": "https://static.wixstatic.com/media/e60af9_828e37ee08b949f199f79ffc2dea449e~mv2.png",
+    "path": "reviews/andi-campognone.webp"
+  },
+  {
+    "id": "ruth-appelhof",
+    "source": "https://mmaa.org/wp-content/uploads/2023/11/M-Logo.png",
+    "path": "reviews/ruth-appelhof.webp"
+  },
+  {
+    "id": "dolly-fiterman",
+    "source": "https://www.revereauctions.com/wp-content/uploads/2024/05/213284-1.jpg",
+    "path": "reviews/dolly-fiterman.webp"
+  },
+  {
+    "id": "yen-shui-long",
+    "source": "https://yikaistudio.com/wp-content/uploads/2024/07/顏水龍.png?wsr",
+    "path": "reviews/yen-shui-long.webp"
+  },
+  {
+    "id": "mo-yan",
+    "source": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4FnJZt-2CiR_oMCNoO90dXv0gjGzIb98QrA&s",
+    "path": "reviews/mo-yan.webp"
+  },
+  {
+    "id": "liu-haisu",
+    "source": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYe0I0hw0R7I0Ccvewvkl29jR57-i4p7SKvw&s",
+    "path": "reviews/liu-haisu.webp"
+  },
+  {
+    "id": "mary-abbe",
+    "source": "https://www.artnews.com/wp-content/themes/vip/pmc-artnews-2019/assets/build/svg/artnews-logo.svg",
+    "path": "reviews/mary-abbe.webp"
+  },
+  {
+    "id": "robert-jacobson",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/f/f6/Mia_minneapolis_logo.svg",
+    "path": "reviews/robert-jacobson.webp"
+  },
+  {
+    "id": "stewart-turnquist",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/f/f6/Mia_minneapolis_logo.svg",
+    "path": "reviews/stewart-turnquist.webp"
+  },
+  {
+    "id": "susan-tai",
+    "source": "https://www.sbma.net/themes/custom/santa_barbara/images/logo.png",
+    "path": "reviews/susan-tai.webp"
+  }
+]

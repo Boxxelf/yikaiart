@@ -10,11 +10,13 @@ test('Reviews: every author, reader navigation, deep links and focus restoration
  for(const review of reviews){
   await page.locator('.review-index').getByRole('button',{name:new RegExp(review.author)}).click();
   await expect(page.locator('.review-sheet-author h2')).toHaveText(review.author);
-  await expect(page.locator('.review-sheet-body')).toContainText(review.quote??review.summary);
+  await expect(page.locator('.review-article-text > p')).toHaveText(review.paragraphs);
+  await expect(page.locator('.review-signature')).toContainText(review.byline);
+  await expect.poll(()=>page.locator('.review-portrait img').evaluate((img:HTMLImageElement)=>img.complete&&img.naturalWidth>0)).toBe(true);
  }
  const open=page.getByRole('button',{name:'Read perspective'});
  await open.click();
- await expect(page.getByRole('dialog')).toContainText('Translated summary');
+ await expect(page.getByRole('dialog')).toContainText('源于自然，胜于自然，新为美。');
  await page.reload();
  await expect(page.getByRole('dialog')).toContainText('Liu Haisu');
  await page.getByRole('button',{name:'Next review in reader'}).click();
@@ -66,13 +68,15 @@ test('Mobile menu, review selection and image reader fit narrow screens',async({
  expect((await new AxeBuilder({page}).analyze()).violations).toEqual([]);
  await page.keyboard.press('Escape');await expect(menu).toBeFocused();
  await page.getByRole('combobox').selectOption('alice-king');
- await expect(page.locator('.review-sheet')).toContainText('Translated summary');
+ await expect(page.locator('.review-sheet')).toContainText('金董建平');
+ await expect(page.locator('.review-article-text > p')).toHaveText(reviews.find(r=>r.id==='alice-king')!.paragraphs);
  await page.screenshot({path:'test-results/reviews-mobile.png',fullPage:true});
  await menu.click();await page.getByRole('link',{name:'Collections',exact:true}).click();
  await expect(page.getByRole('dialog')).not.toBeVisible();
  await expect(page.getByRole('heading',{name:'Collections.',exact:true})).toBeVisible();
  await page.screenshot({path:'test-results/collections-mobile.png'});
  await page.locator('.collection-document').first().click();
+ await page.getByRole('button',{name:'Enlarge archive '+archive[0].title}).click();
  await expect(page.getByRole('dialog')).toContainText(archive[0].description);
  for(const width of [390,320]){await page.setViewportSize({width,height:844});expect(await page.getByRole('dialog').evaluate(el=>el.scrollWidth<=el.clientWidth+1)).toBe(true);}
  await page.keyboard.press('Escape');
