@@ -10,6 +10,7 @@ try {
   page.on('response', r => { if (r.status() >= 400 && r.url().startsWith(base)) failures.push(`${r.status()} ${r.url()}`); });
   await page.goto(`${base}/works/`, { waitUntil: 'networkidle' });
   await page.waitForFunction(() => document.querySelector('.work-label h2')?.textContent === 'The Fragmented Self');
+  await page.locator('.work-label h2').waitFor({state:'visible'});
   assert.equal(await page.locator('.work-label h2').innerText(), 'The Fragmented Self');
   await page.getByRole('button', { name: 'View work', exact: true }).click();
   await page.locator('.detail-art img').waitFor({ state: 'visible' });
