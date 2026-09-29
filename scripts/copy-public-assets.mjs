@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-const works=JSON.parse(await fs.readFile('src/content/works.json','utf8'));
+const works=JSON.parse(await fs.readFile('src/content/works.generated.json','utf8'));
 const memories=JSON.parse(await fs.readFile('src/content/memories.json','utf8'));
 const holdings=JSON.parse(await fs.readFile('src/content/holdings.json','utf8'));
 const archive=JSON.parse(await fs.readFile('src/content/collection-archive.json','utf8'));

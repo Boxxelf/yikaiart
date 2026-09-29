@@ -4,7 +4,7 @@
   "outputDirectory": "dist",
   "rewrites": [
     {
-      "source": "/((?!assets/|art/|photos/|covers/|studio/|memories/|collections/|reviews/|favicon.svg|reviews-paper.svg|biography.html|CNAME).*)",
+      "source": "/((?!works-packets/|manuals/|assets/|art/|photos/|covers/|studio/|memories/|collections/|reviews/|favicon.svg|reviews-paper.svg|biography.html|CNAME).*)",
       "destination": "/index.html"
     }
   ],
@@ -15,6 +15,15 @@
         {
           "key": "Cache-Control",
           "value": "public, max-age=86400"
+        }
+      ]
+    },
+    {
+      "source": "/works-packets/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache"
         }
       ]
     }

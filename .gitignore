@@ -9,3 +9,9 @@ playwright-report/
 *.tsbuildinfo
 
 .node_modules-offloaded-0929/
+
+src/content/works.generated.json
+public/art/updates/
+public/works-packets/
+output/
+tmp/

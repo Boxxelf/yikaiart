@@ -1,7 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 const html = await fs.readFile('dist/index.html', 'utf8');
-for (const route of ['works', 'about', 'memories', 'reviews', 'collections']) { await fs.mkdir(`dist/${route}`, {recursive:true}); await fs.writeFile(`dist/${route}/index.html`, html); }
+for (const route of ['works-editor', 'works', 'about', 'memories', 'reviews', 'collections']) { await fs.mkdir(`dist/${route}`, {recursive:true}); await fs.writeFile(`dist/${route}/index.html`, html); }
 await fs.writeFile('dist/404.html', html);
 await fs.writeFile('dist/.nojekyll', '');
 const biography = JSON.parse(await fs.readFile('src/content/biography.json', 'utf8'));

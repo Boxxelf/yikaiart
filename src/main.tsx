@@ -6,6 +6,7 @@ import '@fontsource-variable/source-serif-4';
 import './styles/tokens.css';
 import './styles/global.css';
 import SiteNavigation from './components/SiteNavigation';
+const WorksEditorPage = lazy(() => import('./pages/WorksEditorPage'));
 const WorksPage = lazy(() => import('./pages/WorksPage'));
 const MemoriesPage = lazy(() => import('./pages/MemoriesPage'));
 const ReviewsPage = lazy(() => import('./pages/ReviewsPage'));
@@ -22,7 +23,7 @@ function Site() {
       <SiteNavigation/>
     </header>
     <Suspense fallback={<main id="main" className="page-loading" aria-live="polite">Opening the archive…</main>}>
-      <Routes><Route path="/" element={<WorksPage key="home" home />} /><Route path="/works" element={<WorksPage key="archive" />} /><Route path="/memories" element={<MemoriesPage />} /><Route path="/reviews" element={<ReviewsPage/>}/><Route path="/collections" element={<CollectionsPage/>}/><Route path="/about" element={<AboutPage />} /><Route path="*" element={<Navigate to="/" replace />} /></Routes>
+      <Routes><Route path="/works-editor" element={<WorksEditorPage />} /><Route path="/" element={<WorksPage key="home" home />} /><Route path="/works" element={<WorksPage key="archive" />} /><Route path="/memories" element={<MemoriesPage />} /><Route path="/reviews" element={<ReviewsPage/>}/><Route path="/collections" element={<CollectionsPage/>}/><Route path="/about" element={<AboutPage />} /><Route path="*" element={<Navigate to="/" replace />} /></Routes>
     </Suspense>
   </div>;
 }
