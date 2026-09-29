@@ -1,3 +1,4 @@
+import Icon from '../../components/Icon';
 import { useEffect, useRef, useState, type PointerEvent } from 'react';
 import { memories, memoryAsset, type Memory, type MemoryKind } from '../../content/memories';
 import { useMedia } from '../../hooks';
@@ -29,16 +30,16 @@ export default function PhotoTray({selected,queuedId,onChoose,onDragChange,ready
  const release=()=>{const d=drag.current;if(!d)return;drag.current=null;const commit=d.progress>.2;if(reduce){go(safePage+d.direction);return;}setTurn(t=>t?{...t,progress:commit?1:0,settling:true}:null);timer.current=setTimeout(()=>{if(commit)setPage(safePage+d.direction);setTurn(null);},650);};
 
  const ghost=(which:number,side:number)=><div className="album-leaf-photos">{items.slice(which*4,(which+1)*4).filter((_,i)=>i%2===side).map(m=><span key={m.id}><img src={memoryAsset(m.image.thumbnail)} alt=""/><small>{m.year??'Undated'}</small></span>)}</div>;
- const cloth=<span className="album-cover-frame"><span className="album-cover-name">Yi Kai</span><span className="album-cover-rule"/><span className="album-cover-title">A life<br/>in photographs</span><span className="album-cover-date">1988 — 2026</span></span>;
+ const cloth=<span className="album-cover-frame"><span className="album-cover-name">Yi Kai</span><span className="album-cover-rule"/><span className="album-cover-title">A life<br/>in photographs</span><span className="album-cover-date">1984 — 2026</span></span>;
  return <div ref={placement.dock} style={placement.style} className={`memory-album-dock ${opened?'is-lifted':''} ${placement.moving?'is-moving':''}`}>
   <div className="desk-album-shadow" aria-hidden="true"/>
   <button ref={cover} className="desk-album" aria-label="Pick up and open photo album" aria-haspopup="dialog" aria-expanded={opened} aria-describedby="album-desk-help" {...placement.handlers} onDragStart={e=>e.preventDefault()} onClick={e=>{if(e.detail===0||!placement.wasDragged.current)lift();}}><span className="desk-album-pages" aria-hidden="true"/><span className="desk-album-cover">{cloth}<span className="album-cover-spine" aria-hidden="true"/></span></button>
   <span className="desk-album-caption"><small>Click to open · Drag to move</small></span><span id="album-desk-help" className="sr-only">Drag to move the album. Use arrow keys to reposition it, Home to reset, or Enter to open.</span>
   <dialog ref={dialog} className="album-lift-dialog" aria-label="The photo album" onCancel={e=>{e.preventDefault();putBack();}} onClick={e=>{if(e.target===e.currentTarget)putBack();}}>
   <div ref={panel} className={`album-lift-panel ${returning?'is-returning':''}`} inert={returning}>
-  <div className="album-lift-top"><span>From the desk of Yi Kai</span><button autoFocus onClick={()=>putBack()}>Put album back <span aria-hidden="true">×</span></button></div>
+  <div className="album-lift-top"><span>From the desk of Yi Kai</span><button autoFocus onClick={()=>putBack()}>Put album back <span aria-hidden="true"><Icon name="close" /></span></button></div>
   <section className={`memory-album is-open ${turn?'is-turning':''}`} aria-label="Photo album">
-  <header className="memory-album-title"><h2>The photo album</h2><span>1988 — 2026</span></header>
+  <header className="memory-album-title"><h2>The photo album</h2><span>1984 — 2026</span></header>
   <nav className="memory-album-filters" aria-label="Filter memories" inert={!opened}>{filters.map(f=><button disabled={!!turn} key={f.id} aria-pressed={filter===f.id} onClick={()=>{setFilter(f.id);setPage(0);}}>{f.label} <span>{f.id==='all'?memories.length:memories.filter(m=>m.kind===f.id).length}</span></button>)}</nav>
   <div className="album-perspective"><div className="album-object" ref={book} data-open={opened}>
    <div className="album-back-board" aria-hidden="true"/><div className="album-page-edges" aria-hidden="true"/>
@@ -52,6 +53,6 @@ export default function PhotoTray({selected,queuedId,onChoose,onDragChange,ready
 
    {opened&&<><button className="album-drag-edge is-left" aria-label="Drag to turn album page backward" disabled={safePage===0} onPointerDown={e=>begin(e,-1)} onPointerMove={scrub} onPointerUp={release} onPointerCancel={()=>{drag.current=null;setTurn(null);}} onKeyDown={e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go(safePage-1);}}}/><button className="album-drag-edge is-right" aria-label="Drag to turn album page forward" disabled={safePage===pages-1} onPointerDown={e=>begin(e,1)} onPointerMove={scrub} onPointerUp={release} onPointerCancel={()=>{drag.current=null;setTurn(null);}} onKeyDown={e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go(safePage+1);}}}/></>}
   </div></div>
-  {opened?<><div className="memory-album-paging"><button aria-label="Previous album page" disabled={safePage===0||!!turn} onClick={()=>go(safePage-1)}>←</button><label><span className="sr-only">Album pages</span><select aria-label="Album pages" disabled={!!turn} value={safePage} onChange={e=>go(Number(e.target.value))}>{Array.from({length:pages},(_,i)=><option key={i} value={i}>{String(i*4+1).padStart(2,'0')}–{String(Math.min((i+1)*4,items.length)).padStart(2,'0')} / {items.length}</option>)}</select></label><button aria-label="Next album page" disabled={safePage===pages-1||!!turn} onClick={()=>go(safePage+1)}>→</button></div><div className="album-bottom"><p>Turn a page. Choose a photograph.</p><span>Click a photograph to send it to the computer.</span></div></>:<p className="memory-album-hint">Pick up the album to open it.</p>}
+  {opened?<><div className="memory-album-paging"><button aria-label="Previous album page" disabled={safePage===0||!!turn} onClick={()=>go(safePage-1)}><Icon name="left" /></button><label><span className="sr-only">Album pages</span><select aria-label="Album pages" disabled={!!turn} value={safePage} onChange={e=>go(Number(e.target.value))}>{Array.from({length:pages},(_,i)=><option key={i} value={i}>{String(i*4+1).padStart(2,'0')}–{String(Math.min((i+1)*4,items.length)).padStart(2,'0')} / {items.length}</option>)}</select></label><button aria-label="Next album page" disabled={safePage===pages-1||!!turn} onClick={()=>go(safePage+1)}><Icon name="right" /></button></div><div className="album-bottom"><p>Turn a page. Choose a photograph.</p><span>Click a photograph to send it to the computer.</span></div></>:<p className="memory-album-hint">Pick up the album to open it.</p>}
  </section></div></dialog></div>;
 }

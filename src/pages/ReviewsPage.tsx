@@ -1,3 +1,4 @@
+import Icon from '../components/Icon';
 import { useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { firstReview, reviews } from '../content/reviews';
@@ -21,8 +22,8 @@ export default function ReviewsPage(){
    <nav className="review-index" aria-label="Choose a review">{reviews.map((r,i)=><button key={r.id} aria-current={r.id===review.id?'true':undefined} onClick={()=>choose(r.id)}><span>{i===0||reviews[i-1].year!==r.year?r.year:''}</span><span>{r.author}</span></button>)}</nav>
    <label className="review-mobile-select">Choose a perspective<select value={review.id} onChange={e=>choose(e.target.value)}>{reviews.map(r=><option key={r.id} value={r.id}>{r.year} — {r.author}</option>)}</select></label>
    <div className="review-paper-stack"><article ref={sheet} className="review-sheet newspaper" key={review.id} aria-label={`Perspective by ${review.author}`}>
-    <ReviewArticle review={review} onImage={open}/><button className="editorial-text-button" onClick={open}>Read perspective <span aria-hidden="true">↗</span></button>
-   </article><nav className="editorial-pagination" aria-label="Turn review pages"><button aria-label="Previous review" onClick={()=>choose(reviews[(index-1+reviews.length)%reviews.length].id)}>←</button><span>Thirteen perspectives</span><button aria-label="Next review" onClick={()=>choose(reviews[(index+1)%reviews.length].id)}>→</button></nav></div>
+    <ReviewArticle review={review} onImage={open}/><button className="editorial-text-button" onClick={open}>Read perspective <span aria-hidden="true"><Icon name="diagonal" /></span></button>
+   </article><nav className="editorial-pagination" aria-label="Turn review pages"><button aria-label="Previous review" onClick={()=>choose(reviews[(index-1+reviews.length)%reviews.length].id)}><Icon name="left" /></button><span>Thirteen perspectives</span><button aria-label="Next review" onClick={()=>choose(reviews[(index+1)%reviews.length].id)}><Icon name="right" /></button></nav></div>
   </div>
   <footer className="editorial-footer"><span>From the archive of Yi Kai</span><span>© {new Date().getFullYear()} Yi Kai</span></footer>
   {reading&&<ReviewReader review={review} onChange={choose} onClose={close} opener={opener}/>}

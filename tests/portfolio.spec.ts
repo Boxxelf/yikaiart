@@ -4,15 +4,15 @@ const errors: string[] = [];
 test.beforeEach(async ({ page }) => { errors.length = 0; page.on('pageerror', error => errors.push(error.message)); });
 test.afterEach(() => { expect(errors).toEqual([]); });
 
-test('Works: renders art, navigation, metadata and complete original detail', async ({ page }) => {
-  await page.goto('/works');
-  await expect(page.getByRole('heading', { name: 'The Fragmented Self', exact: true })).toBeVisible();
+test('Home: renders art, navigation, metadata and complete original detail', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.getByRole('heading', { name: 'Mickey Opera Players with Masker', exact: true })).toBeVisible();
   await expect(page.locator('.works-canvas canvas')).toBeVisible();
   await page.waitForTimeout(3500);
   await page.screenshot({ path: 'test-results/works-desktop.png' });
   await page.getByRole('button', { name: 'Next featured work' }).click();
-  await expect(page.locator('.work-label h2')).toHaveText('Couple in Red');
-  await expect(page.locator('.work-dimensions')).toHaveText('60 × 52 in');
+  await expect(page.locator('.work-label h2')).toHaveText('Symbolic Impression of America');
+  await expect(page.locator('.work-dimensions')).toHaveText('50 × 80 in');
   await page.getByRole('button', { name: 'View work', exact: true }).click();
   await expect(page.getByRole('dialog')).toBeVisible();
   const image = page.locator('.detail-art img');
@@ -20,21 +20,21 @@ test('Works: renders art, navigation, metadata and complete original detail', as
   await expect.poll(() => image.evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth > 0)).toBe(true);
   await page.screenshot({ path: 'test-results/work-detail.png' });
   await page.keyboard.press('ArrowRight');
-  await expect(page.locator('.detail-info h1')).toContainText('Mickey Opera Players');
+  await expect(page.locator('.detail-info h1')).toContainText('Monk Before Temple');
   await page.keyboard.press('Escape');
   await expect(page.getByRole('dialog')).toHaveCount(0);
   await expect(page.getByRole('button', { name: 'View work', exact: true })).toBeFocused();
 });
 
-test('Works opening completes, replays on entry, and preserves direct artwork links', async ({ page }) => {
-  await page.goto('/works');
+test('Home opening completes, replays on entry, and preserves direct artwork links', async ({ page }) => {
+  await page.goto('/');
   const ring = page.locator('.works-canvas');
   await expect(ring).toHaveAttribute('data-intro', 'true');
   await expect(page.getByRole('button', { name: 'Next featured work' })).toBeHidden();
   await expect(ring).toHaveAttribute('data-intro', 'false');
   await expect(page.locator('.works-intro-title')).toHaveCSS('opacity', '0');
   await page.getByRole('button', { name: 'Next featured work' }).click();
-  await expect(page.locator('.work-label h2')).toHaveText('Couple in Red');
+  await expect(page.locator('.work-label h2')).toHaveText('Symbolic Impression of America');
   await page.getByRole('button', { name: 'View work', exact: true }).click();
   const artworkUrl = page.url();
   await page.reload();
@@ -43,16 +43,16 @@ test('Works opening completes, replays on entry, and preserves direct artwork li
   await page.keyboard.press('Escape');
   await expect(page.getByRole('dialog')).toHaveCount(0);
   await page.getByRole('link', { name: 'About', exact: true }).click();
-  await page.getByRole('link', { name: 'Works', exact: true }).click();
+  await page.getByRole('link', { name: 'Yi Kai — Home', exact: true }).click();
   await expect(ring).toHaveAttribute('data-intro', 'true');
   await expect(ring).toHaveAttribute('data-intro', 'false');
   expect(artworkUrl).toContain('work=');
 });
 
-test('Archive: 113 works, six complete collections, fractional and feet dimensions', async ({ page }) => {
-  await page.goto('/works?view=archive');
-  await expect(page.locator('.archive-work')).toHaveCount(113);
-  for (const [id, count] of [['now',26],['robot-ai',18],['opera-players',18],['agree-to-disagree',14],['tibet',18],['land',19]] as const) {
+test('Archive: 121 works, six complete collections, fractional and feet dimensions', async ({ page }) => {
+  await page.goto('/works');
+  await expect(page.locator('.archive-work')).toHaveCount(121);
+  for (const [id, count] of [['now',34],['robot-ai',18],['opera-players',18],['agree-to-disagree',14],['tibet',18],['land',19]] as const) {
     await page.goto(`/works?series=${id}`);
     await expect(page.locator('.archive-work')).toHaveCount(count);
   }
@@ -97,17 +97,19 @@ test('Index links and browser history preserve routes', async ({ page }) => {
 
 test('Mobile: real works, swiping, books, reading, no horizontal overflow', async ({ page }) => {
   await page.setViewportSize({width:390,height:844});
-  await page.goto('/works');
+  await page.goto('/');
+  await expect(page.locator('.mobile-gallery')).toHaveAttribute('data-intro', 'false');
+  await expect(page.locator('.work-label h2')).toHaveText('Mickey Opera Players with Masker');
   await expect(page.locator('.static-work img')).toBeVisible();
   await expect(page.locator('canvas')).toHaveCount(0);
   await page.screenshot({path:'test-results/works-mobile.png'});
   await page.getByRole('button',{name:'Next featured work'}).click();
-  await expect(page.locator('.work-label h2')).toHaveText('Couple in Red');
+  await expect(page.locator('.work-label h2')).toHaveText('Symbolic Impression of America');
   await page.locator('.static-ring').evaluate(el => {
     el.dispatchEvent(new TouchEvent('touchstart', { bubbles: true, touches: [new Touch({ identifier: 1, target: el, clientX: 300, clientY: 300 })] }));
     el.dispatchEvent(new TouchEvent('touchend', { bubbles: true, changedTouches: [new Touch({ identifier: 1, target: el, clientX: 100, clientY: 300 })] }));
   });
-  await expect(page.locator('.work-label h2')).toHaveText('Mickey Opera Players with Masker');
+  await expect(page.locator('.work-label h2')).toHaveText('Monk Before Temple');
   await page.getByRole('button',{name:'Series',exact:false}).first().click();
   await page.locator('.mobile-series').getByRole('button',{name:/LAND/}).click();
   await expect(page.locator('.archive-work')).toHaveCount(19);
@@ -125,7 +127,7 @@ test('Mobile: real works, swiping, books, reading, no horizontal overflow', asyn
 
 test('Reduced motion and no WebGL: all content remains accessible', async ({ page }) => {
   await page.emulateMedia({reducedMotion:'reduce'});
-  await page.goto('/works');
+  await page.goto('/');
   await expect(page.locator('canvas')).toHaveCount(0);
   await page.goto('/about');
   await expect(page.locator('.book-catalogue-item')).toHaveCount(7);
@@ -134,7 +136,7 @@ test('Reduced motion and no WebGL: all content remains accessible', async ({ pag
     const getContext = HTMLCanvasElement.prototype.getContext;
     HTMLCanvasElement.prototype.getContext = function(type: string, ...args: unknown[]) { return type.includes('webgl') ? null : getContext.call(this, type as '2d', ...args); } as typeof getContext;
   });
-  await page.goto('/works');
+  await page.goto('/');
   await expect(page.locator('.static-work')).toBeVisible();
   await page.goto('/about');
   await expect(page.locator('.book-catalogue-item')).toHaveCount(7);

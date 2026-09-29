@@ -7,3 +7,5 @@ test-results/
 playwright-report/
 .cache/
 *.tsbuildinfo
+
+.node_modules-offloaded-0929/

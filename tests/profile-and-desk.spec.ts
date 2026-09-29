@@ -15,7 +15,7 @@ test('Desk album moves without opening, stays bounded, then opens and returns to
  await cover.press('Home');expect((await dock.boundingBox())!.x).toBeCloseTo(start.x,0);
  await cover.press('Enter');await expect(page.getByRole('dialog',{name:'The photo album'})).toBeVisible();
 });
-test('About shows the supplied statement and all 90 career entries with working anchors',async({page})=>{
+test('About shows the supplied statement and all 92 career entries with working anchors',async({page})=>{
  await page.goto('/about');await expect(page.locator('.bookshelf-canvas canvas')).toBeVisible();
  await expect(page.locator('.about-page')).toHaveCSS('background-color','rgb(252, 250, 245)');
  await page.getByRole('link',{name:'Artist statement & career'}).click();
@@ -23,13 +23,13 @@ test('About shows the supplied statement and all 90 career entries with working 
  await expect(page.locator('.artist-statement blockquote p')).toHaveCount(3);
  await expect(page.locator('.artist-statement')).toContainText('34 years in China and the 36 years');
  await expect(page.locator('.artist-collecting')).toContainText('Rockefeller family');
- await expect(page.locator('.career-records li')).toHaveCount(90);
+ await expect(page.locator('.career-records li')).toHaveCount(92);
  await page.getByRole('link',{name:'06 Teaching'}).click();await expect(page).toHaveURL(/#teaching/);await expect(page.getByRole('heading',{name:'Teaching',exact:true})).toBeInViewport();
  expect((await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze()).violations).toEqual([]);
 });
 test('Mobile About remains readable and the album supports touch repositioning',async({page})=>{
  await page.setViewportSize({width:390,height:844});await page.emulateMedia({reducedMotion:'reduce'});await page.goto('/about');
- await expect(page.locator('.book-catalogue-item')).toHaveCount(7);await expect(page.locator('.career-records li')).toHaveCount(90);expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+ await expect(page.locator('.book-catalogue-item')).toHaveCount(7);await expect(page.locator('.career-records li')).toHaveCount(92);expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
  await page.goto('/memories');const cover=page.getByRole('button',{name:'Pick up and open photo album'});await cover.scrollIntoViewIfNeeded();const b=await cover.boundingBox();if(!b)throw Error('Missing album');
  const client=await page.context().newCDPSession(page);const x=b.x+b.width/2,y=b.y+b.height/2;
  await client.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x,y}]});await client.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x:x+45,y:y-40}]});await client.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});

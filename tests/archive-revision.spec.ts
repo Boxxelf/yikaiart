@@ -2,7 +2,7 @@ import {test,expect} from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 test('Cloth album opens, turns a physical leaf, closes and opens at the same spread',async({page})=>{
  await page.goto('/memories');const cover=page.getByRole('button',{name:'Pick up and open photo album'});
- await expect(cover).toBeVisible();await expect(page.getByRole('button',{name:'Load An opening in Taiwan',exact:true})).not.toBeVisible();
+ await expect(cover).toBeVisible();await expect(page.getByRole('button',{name:'Load Preparing an exhibition in Taipei',exact:true})).not.toBeVisible();
  await cover.click();await expect(page.locator('.album-object')).toHaveAttribute('data-open','true');
  await page.getByRole('button',{name:'Next album page',exact:true}).click();await expect(page.locator('.album-turn-leaf')).toBeVisible();
  await expect(page.getByRole('combobox',{name:'Album pages'})).toHaveValue('1');await expect(page.locator('.album-turn-leaf')).toHaveCount(0);
@@ -16,8 +16,8 @@ test('Cloth album opens, turns a physical leaf, closes and opens at the same spr
 test('Memory browser has local address, photo navigation, directory and history',async({page})=>{
  await page.goto('/memories?photo=taiwan-1988');await page.getByRole('button',{name:'Read closer'}).click();
  const dialog=page.getByRole('dialog');await expect(dialog.getByLabel('Simulated browser address')).toHaveValue(/taiwan-1988/);
- await dialog.getByRole('button',{name:'Next photograph in browser'}).click();await expect(dialog.locator('.memory-screen-copy h2')).not.toHaveText('An opening in Taiwan');
- await dialog.getByRole('button',{name:'Browser back',exact:true}).click();await expect(dialog.locator('.memory-screen-copy h2')).toHaveText('An opening in Taiwan');
+ await dialog.getByRole('button',{name:'Next photograph in browser'}).click();await expect(dialog.locator('.memory-screen-copy h2')).not.toHaveText('Preparing an exhibition in Taipei');
+ await dialog.getByRole('button',{name:'Browser back',exact:true}).click();await expect(dialog.locator('.memory-screen-copy h2')).toHaveText('Preparing an exhibition in Taipei');
  await dialog.getByRole('button',{name:'Browser forward',exact:true}).click();
  await dialog.getByRole('button',{name:'All photos',exact:true}).click();await expect(dialog.locator('.memory-browser-directory button')).toHaveCount(28);
  await dialog.getByRole('button',{name:'Browse A family gathering',exact:true}).click();await expect(dialog.getByLabel('Simulated browser address')).toHaveValue(/houston-2026/);

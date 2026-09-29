@@ -1,3 +1,4 @@
+import Icon from './Icon';
 import { useEffect, useState, type RefObject } from 'react';
 import type { Holding } from '../content/holdings';
 import ArchiveDialog from '../features/editorial/ArchiveDialog';
@@ -14,7 +15,7 @@ export default function CollectionDetail({item,items,onChange,onClose,opener}:{i
     {(item.medium||item.dimensions)&&<p className="collection-medium">{item.medium}{item.dimensions&&<><br/>{item.dimensions}</>}</p>}
     {item.description&&<p className="collection-description">{item.description}</p>}
     <p className="editorial-provenance">{item.kind==='archive'?'From the artist’s archive':'Collection record / Yi Kai'}{item.kind==='archive'&&<><br/>English description based on the pictured document.</>}</p>
-    <nav className="editorial-pagination" aria-label="Browse collection details"><button aria-label="Previous collection item" disabled={items.length<2} onClick={()=>move(-1)}>←</button><span>{String(index+1).padStart(2,'0')} / {String(items.length).padStart(2,'0')}</span><button aria-label="Next collection item" disabled={items.length<2} onClick={()=>move(1)}>→</button></nav>
+    <nav className="editorial-pagination" aria-label="Browse collection details"><button aria-label="Previous collection item" disabled={items.length<2} onClick={()=>move(-1)}><Icon name="left" /></button><span>{String(index+1).padStart(2,'0')} / {String(items.length).padStart(2,'0')}</span><button aria-label="Next collection item" disabled={items.length<2} onClick={()=>move(1)}><Icon name="right" /></button></nav>
    </div>
   </div>
  </ArchiveDialog>;

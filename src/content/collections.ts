@@ -1,5 +1,5 @@
 export const collections = [
-  { id: 'now', label: 'NOW', folder: '1. NOW', count: 26, title: 'The Fragmented Self and the Present' },
+  { id: 'now', label: 'NOW', folder: '1. NOW', count: 34, title: 'The Fragmented Self and the Present' },
   { id: 'robot-ai', label: 'ROBOT / AI', folder: '2. Robot AI', count: 18, title: 'Machines, Masks, and Social Anxiety' },
   { id: 'opera-players', label: 'OPERA PLAYERS', folder: '3. Opera Players', count: 18, title: 'Mask, Performance, and Inheritance' },
   { id: 'agree-to-disagree', label: 'AGREE TO DISAGREE', folder: '4. Flags- Agree to Disagree', count: 14, title: 'Symbols, Flags, and Public Speech' },

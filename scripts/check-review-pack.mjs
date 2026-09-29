@@ -1,0 +1,34 @@
+import { chromium, expect } from '@playwright/test';
+import path from 'node:path';
+const browser = await chromium.launch({ channel: 'chrome', headless: true });
+try {
+ const page = await browser.newPage({viewport:{width:1440,height:1000}});
+ const errors=[]; page.on('pageerror',e=>errors.push(e.message));
+ await page.goto('file://'+path.resolve('docs/review-0929/28-photo-checklist.html'));
+ await expect(page.locator('article')).toHaveCount(28);
+ if (!(await page.locator('img').evaluateAll(imgs=>imgs.every(img=>img.complete&&img.naturalWidth>0)))) throw new Error('Checklist images failed');
+ await page.locator('input').first().check();
+ await page.locator('textarea').first().fill('测试备注：已核对姓名');
+ const download=page.waitForEvent('download'); await page.locator('#export').click();
+ const saved=await download; await saved.saveAs('/private/tmp/yikai-review-export.txt');
+ await page.screenshot({path:'test-results/checklist-desktop.png'});
+ await page.emulateMedia({media:'print'});
+ await page.evaluate(()=>window.dispatchEvent(new Event('beforeprint')));
+ await expect(page.locator('.print-note').first()).toContainText('测试备注');
+ await page.emulateMedia({media:'screen'});
+ await page.setViewportSize({width:390,height:844});
+ await page.screenshot({path:'test-results/checklist-mobile.png'});
+ if(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth))throw new Error('Checklist overflow');
+ await page.goto('file://'+path.resolve('docs/review-0929/studio-design-proposal.html'));
+ await expect(page.locator('img')).toHaveCount(4);
+ if (!(await page.locator('img').evaluateAll(imgs=>imgs.every(img=>img.complete&&img.naturalWidth>0)))) throw new Error('Studio images failed');
+ await page.screenshot({path:'test-results/studio-proposal-mobile.png',fullPage:true});
+ if(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth))throw new Error('Studio proposal overflow');
+ await page.setViewportSize({width:1440,height:1000});
+ await page.reload();
+ await page.evaluate(async()=>{await document.fonts.ready;await Promise.all([...document.images].map(img=>img.decode()));});
+ await page.waitForTimeout(200);
+ await page.screenshot({path:'test-results/studio-proposal-desktop.png',fullPage:true});
+ if(errors.length)throw new Error(errors.join('\n'));
+ console.log('Review pack: 28 checklist images, 4 Studio images, exported notes, print notes and mobile layouts verified.');
+} finally {await browser.close();}

@@ -12,13 +12,27 @@ const images=new Set([
  ...[...holdings,...archive].flatMap(m=>[m.image.thumbnail,m.image.display]),
 ]);
 await fs.mkdir('dist',{recursive:true});
+// Read/write bytes explicitly: copyFile's macOS clone path can stall inside
+// a File Provider-managed Documents directory, leaving zero-byte output files.
+async function copyBytes(source, target) {
+ const info = await fs.stat(source);
+ if (info.isDirectory()) {
+  await fs.mkdir(target, {recursive:true});
+  for (const name of await fs.readdir(source)) await copyBytes(path.join(source,name),path.join(target,name));
+ } else {
+  await fs.writeFile(target, await fs.readFile(source));
+ }
+}
 for(const entry of await fs.readdir('public',{withFileTypes:true})){
  if(['art','memories','collections'].includes(entry.name)||entry.name.startsWith('.'))continue;
- await fs.cp(path.join('public',entry.name),path.join('dist',entry.name),{recursive:true});
+ await copyBytes(path.join('public',entry.name),path.join('dist',entry.name));
 }
-for(const image of images){
- const target=path.join('dist',image);
- await fs.mkdir(path.dirname(target),{recursive:true});
- await fs.copyFile(path.join('public',image),target);
+const imagePaths = [...images];
+for(let offset=0;offset<imagePaths.length;offset+=8){
+ await Promise.all(imagePaths.slice(offset,offset+8).map(async image => {
+  const target=path.join('dist',image);
+  await fs.mkdir(path.dirname(target),{recursive:true});
+  await copyBytes(path.join('public',image),target);
+ }));
 }
 console.log(`Copied ${images.size} catalogue images and the remaining public assets.`);

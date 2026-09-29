@@ -8,10 +8,10 @@ try {
   const failures = [];
   page.on('pageerror', e => failures.push(e.message));
   page.on('response', r => { if (r.status() >= 400 && r.url().startsWith(base)) failures.push(`${r.status()} ${r.url()}`); });
-  await page.goto(`${base}/works/`, { waitUntil: 'networkidle' });
-  await page.waitForFunction(() => document.querySelector('.work-label h2')?.textContent === 'The Fragmented Self');
+  await page.goto(`${base}/`, { waitUntil: 'networkidle' });
+  await page.waitForFunction(() => document.querySelector('.work-label h2')?.textContent === 'Mickey Opera Players with Masker');
   await page.locator('.work-label h2').waitFor({state:'visible'});
-  assert.equal(await page.locator('.work-label h2').innerText(), 'The Fragmented Self');
+  assert.equal(await page.locator('.work-label h2').innerText(), 'Mickey Opera Players with Masker');
   await page.getByRole('button', { name: 'View work', exact: true }).click();
   await page.locator('.detail-art img').waitFor({ state: 'visible' });
   await page.waitForFunction(() => { const image = document.querySelector('.detail-art img'); return image instanceof HTMLImageElement && image.complete && image.naturalWidth > 0; });
@@ -28,5 +28,5 @@ try {
   assert.equal(bio.status(), 200);
   assert((await bio.text()).includes('March 11, 1990'));
   assert.deepEqual(failures, []);
-  console.log(`Verified ${base}: Works, complete artwork, About, six Index links, 19 Land works, reload, text biography, and no failed first-party resources.`);
+  console.log(`Verified ${base}: Home, complete artwork, About, six Index links, 19 Land works, reload, text biography, and no failed first-party resources.`);
 } finally { await browser.close(); }

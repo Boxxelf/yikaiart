@@ -18,5 +18,5 @@ test('Compact mobile cover and reduced-motion pickup remain usable without overf
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
  await page.getByRole('button',{name:'Pick up and open photo album'}).click();await expect(page.getByRole('dialog',{name:'The photo album'})).toBeVisible();
  expect(await page.getByRole('dialog',{name:'The photo album'}).evaluate(e=>e.scrollWidth<=e.clientWidth+1)).toBe(true);
- await page.getByRole('button',{name:'Load An opening in Taiwan',exact:true}).click();await expect(page.getByRole('dialog',{name:'The photo album'})).not.toBeVisible();await expect(page.locator('.memory-display h2')).toHaveText('An opening in Taiwan');
+ await page.getByRole('button',{name:'Load Preparing an exhibition in Taipei',exact:true}).click();await expect(page.getByRole('dialog',{name:'The photo album'})).not.toBeVisible();await expect(page.locator('.memory-display h2')).toHaveText('Preparing an exhibition in Taipei');
 });

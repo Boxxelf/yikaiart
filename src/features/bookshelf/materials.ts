@@ -1,6 +1,77 @@
 import type { Chapter } from '../../content/about';
 const cache = new Map<string, HTMLCanvasElement>();
 function random(seed: number) { return () => { seed = (Math.imul(seed, 1664525) + 1013904223) | 0; return (seed >>> 0) / 4294967296; }; }
+
+// Wear follows the places a book is touched: joints, corners and exposed edges.
+// Keep it deterministic so the mobile cover and the physical book are identical.
+function ageSurface(ctx: CanvasRenderingContext2D, chapter: Chapter, kind: string) {
+  const { width: w, height: h } = ctx.canvas;
+  const rand = random(Number(chapter.number) * 7919 + kind.length);
+  const cloth = chapter.material === 'cloth' && kind !== 'inside';
+  const inside = kind === 'inside';
+  ctx.save();
+  // Broad, low-contrast variations, without a repeated grunge image or vignette.
+  for (let i = 0; i < 26; i++) {
+    const x = rand() * w, y = rand() * h, radius = w * (.1 + rand() * .35);
+    const wash = ctx.createRadialGradient(x, y, 0, x, y, radius);
+    wash.addColorStop(0, cloth ? `rgba(237,221,183,${.012 + rand() * .026})` : `rgba(111,76,35,${.008 + rand() * .022})`);
+    wash.addColorStop(1, 'rgba(111,76,35,0)');
+    ctx.fillStyle = wash; ctx.fillRect(0, 0, w, h);
+  }
+  // Bleached cloth and oxidised paper at the fore-edge; a darker recessed joint.
+  const edge = ctx.createLinearGradient(w, 0, w - w * .065, 0);
+  edge.addColorStop(0, cloth ? 'rgba(234,217,181,.27)' : 'rgba(112,73,30,.18)');
+  edge.addColorStop(.25, cloth ? 'rgba(234,217,181,.09)' : 'rgba(112,73,30,.055)');
+  edge.addColorStop(1, 'rgba(112,73,30,0)');
+  ctx.fillStyle = edge; ctx.fillRect(w * .935, 0, w * .065, h);
+  if (!inside) {
+    const jointX = kind === 'spine' ? w * .09 : w * .035;
+    const joint = ctx.createLinearGradient(0, 0, jointX * 2.4, 0);
+    joint.addColorStop(0, 'rgba(36,27,17,.14)');
+    joint.addColorStop(.36, 'rgba(255,245,220,.1)');
+    joint.addColorStop(.51, 'rgba(36,27,17,.2)');
+    joint.addColorStop(.7, 'rgba(255,245,220,.07)');
+    joint.addColorStop(1, 'rgba(36,27,17,0)');
+    ctx.fillStyle = joint; ctx.fillRect(0, 0, jointX * 2.4, h);
+  }
+  // Irregular exposed fibres taper away from the four corners.
+  for (const [cx, cy] of [[0, 0], [w, 0], [0, h], [w, h]]) {
+    const reach = (inside ? .025 : .045 + rand() * .035) * Math.min(w, h);
+    const sx = cx ? -1 : 1, sy = cy ? -1 : 1;
+    for (let i = 0; i < 160; i++) {
+      const along = rand() * reach, depth = Math.pow(rand(), 3) * (1 - along / reach) * reach * .23;
+      const horizontal = rand() > .5;
+      const x = cx + sx * (horizontal ? along : depth), y = cy + sy * (horizontal ? depth : along);
+      ctx.strokeStyle = `rgba(242,228,197,${.08 + rand() * (cloth ? .43 : .27)})`;
+      ctx.lineWidth = .5 + rand() * 1.8; ctx.beginPath(); ctx.moveTo(x, y);
+      ctx.lineTo(x + sx * (horizontal ? 2 + rand() * 8 : rand() * 2), y + sy * (horizontal ? rand() * 2 : 2 + rand() * 8)); ctx.stroke();
+    }
+  }
+  // Small breaks in the printed surface, concentrated at top and bottom edges.
+  for (let i = 0; i < 900; i++) {
+    const x = rand() * w, band = Math.pow(rand(), 4) * h * .025;
+    const y = rand() > .5 ? band : h - band;
+    ctx.fillStyle = `rgba(239,225,195,${rand() * (cloth ? .3 : .19)})`;
+    ctx.fillRect(x, y, .5 + rand() * 4, .4 + rand() * 2);
+  }
+  ctx.restore();
+}
+
+// Unprinted surface relief keeps letters from looking embossed or engraved.
+export function bookRelief(chapter: Chapter) {
+  const key = `${chapter.id}-relief`;
+  if (cache.has(key)) return cache.get(key)!;
+  const canvas = document.createElement('canvas'); canvas.width = 256; canvas.height = 384;
+  const ctx = canvas.getContext('2d')!, pixels = ctx.createImageData(256, 384);
+  const rand = random(Number(chapter.number) * 3571);
+  for (let y = 0; y < 384; y++) for (let x = 0; x < 256; x++) {
+    const p = (y * 256 + x) * 4;
+    const weave = chapter.material === 'cloth' ? Math.sin(x * Math.PI / 2) * 18 + Math.cos(y * Math.PI / 2) * 18 : 0;
+    const value = 128 + weave + (rand() - .5) * 24;
+    pixels.data[p] = pixels.data[p + 1] = pixels.data[p + 2] = value; pixels.data[p + 3] = 255;
+  }
+  ctx.putImageData(pixels, 0, 0); cache.set(key, canvas); return canvas;
+}
 export function bookSurface(chapter: Chapter, kind: 'cover' | 'spine' | 'inside' = 'cover') {
   const key = `${chapter.id}-${kind}`;
   if (cache.has(key)) return cache.get(key)!;
@@ -57,5 +128,6 @@ export function bookSurface(chapter: Chapter, kind: 'cover' | 'spine' | 'inside'
     let y = 490; ctx.font = '400 28px "Source Serif 4 Variable", Georgia, serif'; let line = '';
     for (const word of chapter.excerpt.split(' ')) { if (ctx.measureText(line + word).width > w - 160) { ctx.fillText(line, 80, y); line = ''; y += 47; } line += `${word} `; } ctx.fillText(line, 80, y);
   }
+  ageSurface(ctx, chapter, kind);
   cache.set(key, canvas); return canvas;
 }

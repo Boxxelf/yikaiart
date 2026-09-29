@@ -1,3 +1,4 @@
+import Icon from './Icon';
 import { artistStatement, careerSections, collectingIntroduction } from '../content/artist-profile';
 
 export default function ArtistProfile(){
@@ -14,6 +15,6 @@ export default function ArtistProfile(){
     return <li key={j} className={parts?'dated-record':''}>{parts?<><span className="career-year">{parts[1]}</span><span>{parts[2]}</span></>:item}</li>;
    })}</ul></section>)}</div>
   </div>
-  <footer className="profile-colophon"><span>Yi Kai / A life in painting</span><a href="#main">Back to the bookshelf ↑</a></footer>
+  <footer className="profile-colophon"><span>Yi Kai / A life in painting</span><a href="#main">Back to the bookshelf <Icon name="up" /></a></footer>
  </div>;
 }

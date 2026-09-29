@@ -7,6 +7,7 @@ export const artistStatement = [
 ];
 export const careerSections = [
  {id:'special-collections',title:'Special Collections',items:[
+ 'Walzer Melcher LLP, Woodland Hills, CA',
  'Pomona College, Claremont, CA',
  'University St Thomas, St Paul, MN',
  'Hearts On Fire, Boston, MA',
@@ -28,6 +29,7 @@ export const careerSections = [
  'Beijing Art Institute, China'
  ]},
  {id:'group-exhibitions',title:'Group Exhibitions',items:[
+ '2026 825 Gallery, Los Angeles Art Association (LAAA)',
  '2023 Mirror Garden Art Museum, Tianjin, China',
  '2023 ATTN Art Gallery, Guangzhou, China',
  '2021 Featured Artist, Itsliquid, Italy',
@@ -91,8 +93,8 @@ export const careerSections = [
  ]},
  {id:'teaching',title:'Teaching',items:[
  '2017 – 2020 Working as faculty member in Claremont Graduate University, CA',
- '1988 – 1990 Associate Professor, Central University of Nationalities, Beijing, China',
- '1983 – 1985 Assistant Professor, Art Institute of the People’s Liberation Army, Beijing, China',
+ '1988 – 1990 Central University for Nationalities, Beijing',
+ '1983 – 1985 PLA Art College',
  '2021 Chan Gallery, Pomona College, Claremont, CA',
  '2019 Guangzhou Academy of Fine Arts, China',
  '2018 Tianjin Academy of Fine Art, P.R of China',

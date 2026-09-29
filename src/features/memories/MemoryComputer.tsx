@@ -1,3 +1,4 @@
+import Icon from '../../components/Icon';
 import { useEffect, useRef, type RefObject, type MutableRefObject } from 'react';
 import * as THREE from 'three';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
@@ -82,7 +83,7 @@ export default function MemoryComputer(props:Props) {
     // Tiny key legends and a bespoke identity plate, made with canvas rather than external assets.
     const labels=document.createElement('canvas');labels.width=1024;labels.height=400;
     const lc=labels.getContext('2d')!;lc.clearRect(0,0,1024,400);lc.fillStyle='#42443b';lc.textAlign='center';lc.font='22px monospace';
-    const rows=['1234567890−=⌫','QWERTYUIOP[ ]','ASDFGHJKL;  ↵','ZXCVBNM,./  ↑'];
+    const rows=['1234567890−=⌫','QWERTYUIOP[ ]','ASDFGHJKL;  ↵','ZXCVBNM,./  <Icon name="up" />'];
     rows.forEach((r,ri)=>[...r].slice(0,13).forEach((c,ci)=>lc.fillText(c,45+ci*77,40+ri*93)));
     const labelTex=new THREE.CanvasTexture(labels);const labelMat=new THREE.MeshBasicMaterial({map:labelTex,transparent:true,depthWrite:false});
     const legend=new THREE.Mesh(new THREE.PlaneGeometry(3.13,1.04),labelMat);legend.rotation.x=-Math.PI/2;legend.position.set(0,.48,2.12);computer.add(legend);

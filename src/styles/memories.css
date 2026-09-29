@@ -170,3 +170,12 @@
 @media(max-width:600px){.memory-desk{min-height:520px}.memory-desk .memory-stage{height:450px}.memory-desk .memory-stage-controls{bottom:65px}}
 
 .desk-album{touch-action:none;user-select:none;-webkit-user-select:none}.memory-album-dock.is-moving .desk-album{cursor:grabbing;transition:none;transform:translateY(-9px) rotateX(45deg) rotateY(-5deg) rotateZ(-14deg)}
+
+/* A separate row below the entire desk keeps view controls clear of the 3D scene and album. */
+.memories-layout>.memory-stage-controls{position:relative;inset:auto;width:75%;max-width:870px;margin:12px 0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 0;border-top:1px solid var(--line);z-index:1}
+.memories-layout>.memory-stage-controls .memory-rotation-controls{gap:8px}
+.memory-stage-controls button{min-width:44px;min-height:44px;display:inline-flex;align-items:center;justify-content:center;gap:7px}
+.memory-stage-controls .memory-rotation-controls button:nth-child(2){padding:0 12px}
+@media(max-width:900px){.memories-layout>.memory-stage-controls{width:100%;margin-top:8px}}
+@media(max-width:600px){.memories-layout>.memory-stage-controls{flex-wrap:wrap;justify-content:center;gap:2px 18px;margin-top:0;padding:8px 0;font-size:12px}.memories-layout>.memory-stage-controls>div:empty{display:none}.memories-layout>.memory-stage-controls>div{gap:12px}.memories-instructions{margin-top:16px}}
+@media(min-width:601px){.memories-layout>.memory-stage-controls{width:100%;max-width:1160px;margin:12px auto 0;display:grid;grid-template-columns:1fr auto 1fr}.memories-layout>.memory-stage-controls>.memory-rotation-controls{grid-column:2}.memories-layout>.memory-stage-controls>div+div{grid-column:3;justify-self:end}}

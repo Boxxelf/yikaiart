@@ -17,12 +17,12 @@ function Site() {
   return <div className={`site ${about ? 'site-about' : 'site-works'}`}>
     <a className="skip-link" href="#main">Skip to content</a>
     <header className="site-header">
-      <NavLink className="wordmark" to="/works" aria-label="Yi Kai — Selected Works">YI KAI<span className="wordmark-period">.</span></NavLink>
+      <NavLink className="wordmark" to="/" aria-label="Yi Kai — Home">YI KAI<span className="wordmark-period">.</span></NavLink>
       <span className="artist-descriptor">Chinese-American<br />Contemporary Artist</span>
       <SiteNavigation/>
     </header>
     <Suspense fallback={<main id="main" className="page-loading" aria-live="polite">Opening the archive…</main>}>
-      <Routes><Route path="/" element={<Navigate to="/works" replace />} /><Route path="/works" element={<WorksPage />} /><Route path="/memories" element={<MemoriesPage />} /><Route path="/reviews" element={<ReviewsPage/>}/><Route path="/collections" element={<CollectionsPage/>}/><Route path="/about" element={<AboutPage />} /><Route path="*" element={<Navigate to="/works" replace />} /></Routes>
+      <Routes><Route path="/" element={<WorksPage key="home" home />} /><Route path="/works" element={<WorksPage key="archive" />} /><Route path="/memories" element={<MemoriesPage />} /><Route path="/reviews" element={<ReviewsPage/>}/><Route path="/collections" element={<CollectionsPage/>}/><Route path="/about" element={<AboutPage />} /><Route path="*" element={<Navigate to="/" replace />} /></Routes>
     </Suspense>
   </div>;
 }

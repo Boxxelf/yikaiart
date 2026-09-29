@@ -2,7 +2,7 @@ import { useEffect, useRef, type MutableRefObject } from 'react';
 import * as THREE from 'three';
 import gsap from 'gsap';
 import { chapters, type Chapter } from '../../content/about';
-import { bookSurface } from './materials';
+import { bookSurface, bookRelief } from './materials';
 
 export type ShelfControl = { select: (id: string) => void; open: () => void; reset: () => void };
 type Props = { onSelect: (id: string | null) => void; onOpen: (id: string) => void; onHover: (id: string | null) => void; onFailure: () => void; controls: MutableRefObject<ShelfControl | null>; paused: boolean };
@@ -33,8 +33,11 @@ export default function BookshelfScene(props: Props) {
       const group = new THREE.Group(); group.name = chapter.id; const x = cursor + w / 2; group.position.set(x, h / 2, 0); group.rotation.z = (Number(chapter.number) % 3 - 1) * .0035;
       const mat = (color: string) => new THREE.MeshStandardMaterial({ color, roughness: .96 });
       const edgeMaterial = mat(chapter.color), paper = mat('#EEE5D2');
-      const spineMat = new THREE.MeshStandardMaterial({ map: texturesFor(chapter, 'spine'), roughness: .97 });
-      const coverMat = new THREE.MeshStandardMaterial({ map: texturesFor(chapter, 'cover'), roughness: chapter.material === 'cloth' ? .98 : .9 });
+      const relief = new THREE.CanvasTexture(bookRelief(chapter));
+      relief.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy()); textures.push(relief);
+      const surface = { bumpMap: relief, bumpScale: chapter.material === 'cloth' ? .38 : .16 };
+      const spineMat = new THREE.MeshStandardMaterial({ map: texturesFor(chapter, 'spine'), roughness: .97, ...surface });
+      const coverMat = new THREE.MeshStandardMaterial({ map: texturesFor(chapter, 'cover'), roughness: chapter.material === 'cloth' ? .98 : .9, ...surface });
       const innerMat = new THREE.MeshStandardMaterial({ map: texturesFor(chapter, 'inside'), roughness: 1 });
       const pageBlock = new THREE.Mesh(new THREE.BoxGeometry(w - 10, h - 12, d - 8), paper); pageBlock.position.z = -d / 2; group.add(pageBlock);
       const spine = new THREE.Mesh(new THREE.BoxGeometry(w, h, 7), [edgeMaterial, edgeMaterial, edgeMaterial, edgeMaterial, spineMat, edgeMaterial]); group.add(spine);
