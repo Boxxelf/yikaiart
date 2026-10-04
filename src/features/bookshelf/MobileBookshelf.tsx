@@ -1,3 +1,4 @@
+import { useTranslation } from '../../i18n/Locale';
 import { useRef, useState } from 'react';
 import { chapters } from '../../content/about';
 import BookCover from '../../components/BookCover';
@@ -5,6 +6,8 @@ import Icon from '../../components/Icon';
 
 type Props = { onRead: (id: string, button: HTMLButtonElement) => void; reduced: boolean };
 export default function MobileBookshelf({ onRead, reduced }: Props) {
+ const { t } = useTranslation();
+
   const shelf = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
   const move = (index: number) => {
@@ -20,13 +23,13 @@ export default function MobileBookshelf({ onRead, reduced }: Props) {
     setActive(nearest);
   };
   return <div className="mobile-bookshelf">
-    <div className="mobile-shelf-heading"><span>THE PERSONAL LIBRARY</span><span>Swipe to browse</span></div>
-    <div className="book-catalogue mobile-book-track" ref={shelf} onScroll={update} role="region" aria-label="Browse the seven chapters">
-      {chapters.map(c => <button className="book-catalogue-item" key={c.id} onClick={e => onRead(c.id, e.currentTarget)} aria-label={`Open ${c.spine}: ${c.title}`}>
+    <div className="mobile-shelf-heading"><span>{t("THE PERSONAL LIBRARY")}</span><span>{t("Swipe to browse")}</span></div>
+    <div className="book-catalogue mobile-book-track" ref={shelf} onScroll={update} role="region" aria-label={t("Browse the seven chapters")}>
+      {chapters.map(c => <button className="book-catalogue-item" key={c.id} onClick={e => onRead(c.id, e.currentTarget)} aria-label={t(`Open ${c.spine}: ${c.title}`)}>
         <div className="mobile-book-object"><BookCover chapter={c} /></div>
-        <span className="mobile-book-copy"><span>{c.number} / {c.subtitle}</span><strong>{c.title}</strong><span className="mobile-book-excerpt">{c.excerpt}</span><span className="mobile-book-read">Read chapter <Icon name="diagonal" /></span></span>
+        <span className="mobile-book-copy"><span>{t(c.number)}{t(" / ")}{t(c.subtitle)}</span><strong>{t(c.title)}</strong><span className="mobile-book-excerpt">{t(c.excerpt)}</span><span className="mobile-book-read">{t("Read chapter ")}<Icon name="diagonal" /></span></span>
       </button>)}
     </div>
-    <nav className="mobile-shelf-navigation" aria-label="Bookshelf navigation"><button onClick={() => move(active - 1)} disabled={active === 0} aria-label="Previous book"><Icon name="left" /></button><span aria-live="polite">{String(active + 1).padStart(2, '0')} <span>/ 07</span></span><button onClick={() => move(active + 1)} disabled={active === chapters.length - 1} aria-label="Next book"><Icon name="right" /></button></nav>
+    <nav className="mobile-shelf-navigation" aria-label={t("Bookshelf navigation")}><button onClick={() => move(active - 1)} disabled={active === 0} aria-label={t("Previous book")}><Icon name="left" /></button><span aria-live="polite">{t(String(active + 1).padStart(2, '0'))} <span>{t("/ 07")}</span></span><button onClick={() => move(active + 1)} disabled={active === chapters.length - 1} aria-label={t("Next book")}><Icon name="right" /></button></nav>
   </div>;
 }

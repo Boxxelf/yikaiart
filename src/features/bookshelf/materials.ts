@@ -1,3 +1,4 @@
+import {translateText, type Locale} from '../../i18n/translate';
 import type { Chapter } from '../../content/about';
 const cache = new Map<string, HTMLCanvasElement>();
 function random(seed: number) { return () => { seed = (Math.imul(seed, 1664525) + 1013904223) | 0; return (seed >>> 0) / 4294967296; }; }
@@ -72,8 +73,8 @@ export function bookRelief(chapter: Chapter) {
   }
   ctx.putImageData(pixels, 0, 0); cache.set(key, canvas); return canvas;
 }
-export function bookSurface(chapter: Chapter, kind: 'cover' | 'spine' | 'inside' = 'cover') {
-  const key = `${chapter.id}-${kind}`;
+export function bookSurface(chapter: Chapter, kind: 'cover' | 'spine' | 'inside' = 'cover', locale: Locale = 'en') {
+  const key = `${chapter.id}-${kind}-${locale}`;
   if (cache.has(key)) return cache.get(key)!;
   const canvas = document.createElement('canvas');
   canvas.width = kind === 'spine' ? Math.round(chapter.width / chapter.height * 1250) : 840;
@@ -111,22 +112,22 @@ export function bookSurface(chapter: Chapter, kind: 'cover' | 'spine' | 'inside'
     ctx.textAlign = 'center'; ctx.font = '400 29px "Instrument Sans Variable", sans-serif'; ctx.fillText(chapter.number, w / 2, h * .125);
     ctx.save(); ctx.translate(w / 2, h * .51); ctx.rotate(-Math.PI / 2);
     ctx.font = `500 ${chapter.id === 'unresolved' ? 34 : 40}px "Instrument Sans Variable", sans-serif`;
-    ctx.letterSpacing = '7px'; ctx.fillText(chapter.spine, 0, 0); ctx.restore();
+    ctx.letterSpacing = '7px'; ctx.fillText(translateText(chapter.spine,locale), 0, 0); ctx.restore();
     ctx.font = '400 19px "Instrument Sans Variable", sans-serif'; ctx.fillStyle = chapter.id === 'origin' ? '#F3EADB' : chapter.ink; ctx.fillText('YI KAI', w / 2, h * .94);
   } else if (kind === 'cover') {
     const inset = 73;
     ctx.textAlign = 'left'; ctx.font = '400 22px "Instrument Sans Variable", sans-serif'; ctx.fillText(`YI KAI     /     ${chapter.number}`, inset, 92);
     ctx.font = `${chapter.id === 'unresolved' ? '400 133px' : '400 85px'} "Source Serif 4 Variable", Georgia, serif`;
-    ctx.fillText(chapter.cover[0], inset, h * .32, w - inset * 2);
-    ctx.font = '500 26px "Instrument Sans Variable", sans-serif'; ctx.fillText(chapter.cover[1], inset, h * .38, w - inset * 2);
-    ctx.font = '400 20px "Instrument Sans Variable", sans-serif'; ctx.fillText(chapter.subtitle, inset, h * .53, w - inset * 2);
-    ctx.fillStyle = chapter.id === 'origin' ? '#F3EADB' : chapter.ink; ctx.font = '400 17px "Instrument Sans Variable", sans-serif'; ctx.fillText('A LIFE IN PAINTING', inset, h * .93);
+    ctx.fillText(translateText(chapter.cover[0],locale), inset, h * .32, w - inset * 2);
+    ctx.font = '500 26px "Instrument Sans Variable", sans-serif'; ctx.fillText(translateText(chapter.cover[1],locale), inset, h * .38, w - inset * 2);
+    ctx.font = '400 20px "Instrument Sans Variable", sans-serif'; ctx.fillText(translateText(chapter.subtitle,locale), inset, h * .53, w - inset * 2);
+    ctx.fillStyle = chapter.id === 'origin' ? '#F3EADB' : chapter.ink; ctx.font = '400 17px "Instrument Sans Variable", sans-serif'; ctx.fillText(translateText('A LIFE IN PAINTING',locale), inset, h * .93);
   } else {
     ctx.font = '400 25px "Instrument Sans Variable", sans-serif'; ctx.fillText(chapter.number, 80, 95);
-    ctx.font = '400 55px "Source Serif 4 Variable", Georgia, serif'; ctx.fillText(chapter.title, 80, 265, w - 160);
-    ctx.font = '400 23px "Instrument Sans Variable", sans-serif'; ctx.fillText(chapter.subtitle, 80, 330, w - 160);
+    ctx.font = '400 55px "Source Serif 4 Variable", Georgia, serif'; ctx.fillText(translateText(chapter.title,locale), 80, 265, w - 160);
+    ctx.font = '400 23px "Instrument Sans Variable", sans-serif'; ctx.fillText(translateText(chapter.subtitle,locale), 80, 330, w - 160);
     let y = 490; ctx.font = '400 28px "Source Serif 4 Variable", Georgia, serif'; let line = '';
-    for (const word of chapter.excerpt.split(' ')) { if (ctx.measureText(line + word).width > w - 160) { ctx.fillText(line, 80, y); line = ''; y += 47; } line += `${word} `; } ctx.fillText(line, 80, y);
+    for (const word of (locale==='zh-Hant'?[...translateText(chapter.excerpt,locale)]:chapter.excerpt.split(' '))) { if (ctx.measureText(line + word).width > w - 160) { ctx.fillText(line, 80, y); line = ''; y += 47; } line += locale==='zh-Hant'?word:`${word} `; } ctx.fillText(line, 80, y);
   }
   ageSurface(ctx, chapter, kind);
   cache.set(key, canvas); return canvas;

@@ -1,3 +1,4 @@
+import { useTranslation } from '../i18n/Locale';
 import Icon from '../components/Icon';
 import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
@@ -10,6 +11,8 @@ import { useMemorySequence } from '../features/memories/useMemorySequence';
 import '../styles/memories.css';
 const MemoryComputer=lazy(()=>import('../features/memories/MemoryComputer'));
 export default function MemoriesPage(){
+ const { t, locale } = useTranslation();
+
   const [params,setParams]=useSearchParams();
   const routeId=params.get('photo');
   const [selected,setSelected]=useState(()=>memories.find(m=>m.id===routeId)??memories[0]);
@@ -44,7 +47,7 @@ export default function MemoriesPage(){
     animateNext.current=false;
   },[routeId,sequence.start,sequence.reset]);
   useEffect(()=>{const cancelQueue=()=>setQueued(null);window.addEventListener('popstate',cancelQueue);return()=>window.removeEventListener('popstate',cancelQueue);},[]);
-  useEffect(()=>{document.title=`${sequence.current?.title??'Memories'} — Yi Kai`;},[sequence.current]);
+  useEffect(()=>{document.title = t(`${sequence.current?.title??'Memories'} — Yi Kai`);},[sequence.current,t]);
   useEffect(()=>{const key=(e:KeyboardEvent)=>{if(e.key==='Escape'){setDragging(null);setOver(false);}};window.addEventListener('keydown',key);return()=>window.removeEventListener('keydown',key);},[]);
   const place=(memory:Memory,print:HTMLElement|null=null)=>{
     setSelected(memory);setDragging(null);setOver(false);
@@ -62,28 +65,28 @@ export default function MemoriesPage(){
   const status=sequence.error || (invalid?'That memory was not found. Choose a photograph below.':sequence.phase==='loading'?'Preparing the photograph…':sequence.phase==='inserting'?'Placing this moment in the memory box…':sequence.phase==='revealing'?'A moment comes into view.':hasMemory?'Click the screen to view the full photograph.':'Click a photograph in the album to begin.');
   return <main id="main" tabIndex={-1} className="memories-page">
     <div className="memories-layout">
-      <header className="memories-intro"><span className="memory-section-name">The personal archive / 1984 — 2026</span><h1>Memories<span className="memory-title-period">.</span></h1><p className="memories-deck">A life around art, one photograph at a time.</p></header>
+      <header className="memories-intro"><span className="memory-section-name">{t("The personal archive / 1984 — 2026")}</span><h1>{t("Memories")}<span className="memory-title-period">{t(".")}</span></h1><p className="memories-deck">{t("A life around art, one photograph at a time.")}</p></header>
       <div className={`memory-desk ${albumLifted?'has-lifted-album':''}`}>
       <div className="memory-desk-plane" aria-hidden="true"/>
       <PhotoTray selected={selected} queuedId={queued?.memory.id} onChoose={place} onDragChange={setDragging} ready={ready||failed} onLiftChange={setAlbumLifted}/>
-      <section ref={stage} className={`memory-stage ${failed?'is-fallback':''} ${dragging?'is-dragging':''} ${over?'is-over':''}`} aria-label="Interactive memory computer" data-phase={sequence.phase}>
-        <div className="memory-stage-caption">{hasMemory && <span>{`${String(memories.findIndex(m=>m.id===sequence.current!.id)+1).padStart(2,'0')} / ${memories.length}`}</span>}</div>
-        {!failed&&<Suspense fallback={<div className="memory-stage-loading">Opening the memory box…</div>}><MemoryComputer screen={screen} slot={slot} progress={sequence.progress} phase={sequence.phase} image={sequence.incoming} hasMemory={hasMemory} interaction={stage} origin={origin} viewReset={viewReset} rotateStep={rotateStep} reduced={reduce} paused={close||albumLifted} onFailure={()=>setFailed(true)} onReady={()=>setReady(true)}/></Suspense>}
-        {failed&&<div className="memory-fallback-housing" aria-hidden="true"><div className="memory-fallback-base"><span>YI KAI</span><i/></div><div className="memory-fallback-keyboard">{Array.from({length:48},(_,i)=><i key={i}/>)}</div></div>}
+      <section ref={stage} className={`memory-stage ${failed?'is-fallback':''} ${dragging?'is-dragging':''} ${over?'is-over':''}`} aria-label={t("Interactive memory computer")} data-phase={sequence.phase}>
+        <div className="memory-stage-caption">{hasMemory && <span>{t(`${String(memories.findIndex(m=>m.id===sequence.current!.id)+1).padStart(2,'0')} / ${memories.length}`)}</span>}</div>
+        {!failed&&<Suspense fallback={<div className="memory-stage-loading">{t("Opening the memory box…")}</div>}><MemoryComputer screen={screen} slot={slot} progress={sequence.progress} phase={sequence.phase} image={sequence.incoming} hasMemory={hasMemory} interaction={stage} origin={origin} viewReset={viewReset} rotateStep={rotateStep} reduced={reduce} paused={close||albumLifted} onFailure={()=>setFailed(true)} onReady={()=>setReady(true)}/></Suspense>}
+        {failed&&<div className="memory-fallback-housing" aria-hidden="true"><div className="memory-fallback-base"><span>{t("YI KAI")}</span><i/></div><div className="memory-fallback-keyboard">{Array.from({length:48},(_,i)=><i key={i}/>)}</div></div>}
         <div className={`memory-display ${(ready||failed)&&sequence.phase!=='inserting'?'has-content':''}`} ref={screen} inert={sequence.phase==='inserting'} aria-hidden={sequence.phase==='inserting'}>
-          {sequence.current?<><MemoryScreen memory={sequence.current} revealing={sequence.phase==='revealing'}/><button className="memory-screen-open" disabled={busy} onClick={openReader} aria-label={`Enlarge ${sequence.current.title}`}><span aria-hidden="true">View photograph <Icon name="diagonal" /></span></button></>:<div className="memory-screen-idle"><span className="memory-idle-mark">YI KAI<span>®</span></span><span>MEMORY TERMINAL</span><i aria-hidden="true"/><p>Every photograph holds a story.</p><small>Click a photograph in the album.</small></div>}
+          {sequence.current?<><MemoryScreen memory={sequence.current} revealing={sequence.phase==='revealing'}/><button className="memory-screen-open" disabled={busy} onClick={openReader} aria-label={t(`Enlarge ${sequence.current.title}`)}><span aria-hidden="true">{t("View photograph ")}<Icon name="diagonal" /></span></button></>:<div className="memory-screen-idle"><span className="memory-idle-mark">{t("YI KAI")}<span>{t("®")}</span></span><span>{t("MEMORY TERMINAL")}</span><i aria-hidden="true"/><p>{t("Every photograph holds a story.")}</p><small>{t("Click a photograph in the album.")}</small></div>}
 
         </div>
-        <div className="memory-slot-target" ref={slot} onDragOver={e=>{if(dragging&&!busy){e.preventDefault();e.dataTransfer.dropEffect='copy';setOver(true);}}} onDragLeave={()=>setOver(false)} onDrop={e=>{e.preventDefault();const id=e.dataTransfer.getData('text/x-yikai-memory');const memory=memories.find(m=>m.id===id);setOver(false);setDragging(null);if(memory&&!busy)place(memory);}}><span>Place photograph here</span></div>
+        <div className="memory-slot-target" ref={slot} onDragOver={e=>{if(dragging&&!busy){e.preventDefault();e.dataTransfer.dropEffect='copy';setOver(true);}}} onDragLeave={()=>setOver(false)} onDrop={e=>{e.preventDefault();const id=e.dataTransfer.getData('text/x-yikai-memory');const memory=memories.find(m=>m.id===id);setOver(false);setDragging(null);if(memory&&!busy)place(memory);}}><span>{t("Place photograph here")}</span></div>
 
       </section>
       </div>
-        <div className="memory-stage-controls"><div className="memory-rotation-controls"><button disabled={busy||failed} aria-label="Rotate computer left" onClick={()=>setRotateStep(v=>v-1)}><Icon name="rotate-left" /></button><button disabled={busy||failed} onClick={()=>setViewReset(v=>v+1)}>Reset view</button><button disabled={busy||failed} aria-label="Rotate computer right" onClick={()=>setRotateStep(v=>v+1)}><Icon name="rotate-right" /></button></div><div>{hasMemory&&<><button disabled={busy} onClick={()=>place(sequence.current!)}>Replay</button><button disabled={busy} onClick={openReader}>Read closer <span aria-hidden="true"><Icon name="diagonal" /></span></button></>}{animating&&<button onClick={sequence.skip}>Skip animation</button>}</div></div>
-      <p className="memories-instructions">Pick up the album. Choose a photograph. <span>Drag the computer to turn it, or click its screen to explore.</span></p>
+        <div className="memory-stage-controls"><div className="memory-rotation-controls"><button disabled={busy||failed} aria-label={t("Rotate computer left")} onClick={()=>setRotateStep(v=>v-1)}><Icon name="rotate-left" /></button><button disabled={busy||failed} onClick={()=>setViewReset(v=>v+1)}>{t("Reset view")}</button><button disabled={busy||failed} aria-label={t("Rotate computer right")} onClick={()=>setRotateStep(v=>v+1)}><Icon name="rotate-right" /></button></div><div>{hasMemory&&<><button disabled={busy} onClick={()=>place(sequence.current!)}>{t("Replay")}</button><button disabled={busy} onClick={openReader}>{t("Read closer ")}<span aria-hidden="true"><Icon name="diagonal" /></span></button></>}{animating&&<button onClick={sequence.skip}>{t("Skip animation")}</button>}</div></div>
+      <p className="memories-instructions">{t("Pick up the album. Choose a photograph. ")}<span>{t("Drag the computer to turn it, or click its screen to explore.")}</span></p>
     </div>
-    <div className="memory-now-playing"><div><span className="memory-selected-label">{busy?'Opening photograph':hasMemory?'On the screen':'From the album'}</span><p>{sequence.current?.title??selected.title}</p></div><div className="memory-navigation"><button disabled={busy} onClick={()=>move(-1)} aria-label="Previous memory"><Icon name="left" /></button><button disabled={busy} onClick={()=>move(1)} aria-label="Next memory"><Icon name="right" /></button></div></div>
-    <p className={`memory-status ${sequence.error||invalid?'is-error':''}`} role="status" aria-live="polite">{queued?`${status} Up next: ${queued.memory.title}.`:status} {sequence.error&&<button className="memory-retry" onClick={()=>place(selected)}>Try again</button>}</p>
-    <footer className="memories-footer"><span>From the personal archive of Yi Kai</span><span>© {new Date().getFullYear()} Yi Kai</span></footer>
+    <div className="memory-now-playing"><div><span className="memory-selected-label">{t(busy?'Opening photograph':hasMemory?'On the screen':'From the album')}</span><p>{t(sequence.current?.title??selected.title)}</p></div><div className="memory-navigation"><button disabled={busy} onClick={()=>move(-1)} aria-label={t("Previous memory")}><Icon name="left" /></button><button disabled={busy} onClick={()=>move(1)} aria-label={t("Next memory")}><Icon name="right" /></button></div></div>
+    <p className={`memory-status ${sequence.error||invalid?'is-error':''}`} role="status" aria-live="polite">{t(queued?`${status} Up next: ${queued.memory.title}.`:status)} {sequence.error&&<button className="memory-retry" onClick={()=>place(selected)}>{t("Try again")}</button>}</p>
+    <footer className="memories-footer"><span>{t("From the personal archive of Yi Kai")}</span><span>{t("© ")}{t(new Date().getFullYear())}{t(" Yi Kai")}</span></footer>
     {close&&sequence.current&&<MemoryBrowser memory={sequence.current} onClose={memory=>{setClose(false);setSelected(memory);if(memory.id!==routeId)setParams({photo:memory.id},{preventScrollReset:true});readerOpener.current?.focus({preventScroll:true});}}/>}
   </main>;
 }

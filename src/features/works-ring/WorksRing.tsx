@@ -1,3 +1,4 @@
+import { useTranslation } from '../../i18n/Locale';
 import { useEffect, useRef, type MutableRefObject } from 'react';
 import * as THREE from 'three';
 import gsap from 'gsap';
@@ -47,6 +48,8 @@ void main(){
 
 type Props = { initialIndex: number; onIndexChange: (i: number) => void; onOpen: (i: number) => void; controls: MutableRefObject<(d: number) => void>; paused: boolean; onFailure: () => void };
 export default function WorksRing(props: Props) {
+ const { t } = useTranslation();
+
   const ref = useRef<HTMLDivElement>(null);
   const latest = useRef(props); latest.current = props;
   useEffect(() => {
@@ -186,5 +189,5 @@ export default function WorksRing(props: Props) {
     frame = requestAnimationFrame(render);
     return () => { dead = true; cancelAnimationFrame(frame); observer.disconnect(); clearTimeout(wheelTimeout); introTimeline?.kill(); gsap.killTweensOf(state); tweens.forEach(t => t.kill()); host.removeEventListener('wheel', wheel); host.removeEventListener('pointerdown', pointerDown); host.removeEventListener('pointermove', pointerMove); host.removeEventListener('pointerup', pointerUp); host.removeEventListener('pointercancel', pointerUp); host.removeEventListener('pointerleave', leave); renderer.domElement.removeEventListener('webglcontextlost', lost); geometry.dispose(); material.dispose(); texture.dispose(); renderer.dispose(); renderer.forceContextLoss(); renderer.domElement.remove(); };
   }, []);
-  return <div className="works-canvas" ref={ref} data-intro="true" tabIndex={0} aria-label="Artwork ring. Use left and right arrow keys, or scroll and drag to browse."><span className="works-intro-title" aria-hidden="true">YI KAI</span></div>;
+  return <div className="works-canvas" ref={ref} data-intro="true" tabIndex={0} aria-label={t("Artwork ring. Use left and right arrow keys, or scroll and drag to browse.")}><span className="works-intro-title" aria-hidden="true">{t("YI KAI")}</span></div>;
 }

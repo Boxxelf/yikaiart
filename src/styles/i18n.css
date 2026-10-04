@@ -1,0 +1,20 @@
+.language-switch{display:inline-flex;align-items:center;gap:5px;flex-shrink:0;padding:2px 6px;border:1px solid var(--line);background:var(--paper-light);border-radius:2px;color:var(--muted);font:12px/1.2 var(--sans);letter-spacing:0;pointer-events:auto}
+.language-switch button{font:inherit;min-height:36px;min-width:32px;text-align:center;padding:5px 4px;display:inline-block!important;cursor:pointer}
+.language-switch button[aria-pressed=true]{color:var(--ink);text-decoration:underline;text-underline-offset:5px}
+.language-switch button:focus-visible{outline-offset:0}.language-switch>span{font:11px/1 var(--sans)!important;color:var(--line)}
+.language-switch-floating{position:fixed;top:29px;right:var(--edge);z-index:30}
+.site-header nav{margin-right:118px}.site-menu-toggle{margin-right:118px}
+.chapter-dialog>.language-switch{position:absolute;top:20px;left:25px;z-index:4}
+.editorial-dialog-top,.detail-top,.studio-reader-top,.album-lift-top{gap:16px;flex-wrap:wrap}
+.editorial-dialog-top>.language-switch+span,.detail-top>.language-switch+span{margin-right:auto}
+.memory-browser-title{gap:10px}.memory-browser-title>span{min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.memory-browser-title .language-switch{font-size:11px}.memory-browser-title .language-switch button{font:11px/1.2 var(--sans);width:auto;height:auto;min-height:30px;border:0;background:transparent;white-space:nowrap}
+.translation-note{font:12px/1.8 var(--sans);color:var(--muted);margin:20px 0}.studio-full-article>.translation-note{max-width:680px;margin:0 auto 24px}
+html[lang=zh-Hant]{--sans:"Instrument Sans Variable","PingFang TC","Microsoft JhengHei","Noto Sans CJK TC",sans-serif;--serif:"Source Serif 4 Variable","Songti TC","Noto Serif CJK TC","PMingLiU",serif;line-break:strict}
+html[lang=zh-Hant] :is(h1,h2,h3,h4){letter-spacing:.015em;line-height:1.25}
+html[lang=zh-Hant] :is(.biography-paragraph,.review-article-text p,.studio-feature-fulltext p){line-height:1.95;max-width:38em}
+html[lang=zh-Hant] .work-label h2{font-size:clamp(21px,2vw,32px);line-height:1.5}
+html[lang=zh-Hant] .studio-feature-opening h3{font-size:clamp(42px,5.8vw,82px)}
+html[lang=zh-Hant] :is(.review-sheet-author p,.memory-screen-copy p,.collection-description){line-height:1.9}
+html[lang=zh-Hant] .memory-browser-menu{letter-spacing:0}
+@media(max-width:767px){.language-switch-floating{top:20px}.site-menu-toggle{margin-right:110px}.language-switch{gap:3px;padding:2px 4px}.language-switch button{min-height:36px}.chapter-dialog>.language-switch{left:18px;top:17px}.reader-close{right:20px}.memory-browser-title .language-switch{gap:1px;padding:0 2px}.memory-browser-title .language-switch button{min-width:27px;padding:3px}.editorial-dialog-top>span{display:none}html[lang=zh-Hant] .studio-feature-opening h3{font-size:43px}html[lang=zh-Hant] .studio-heading h2{font-size:42px}.translation-note{font-size:11px}}
+@media(max-width:359px){.site-menu-toggle{margin-right:104px}.site-header{gap:12px}.wordmark{font-size:25px}.language-switch-floating{right:18px}}

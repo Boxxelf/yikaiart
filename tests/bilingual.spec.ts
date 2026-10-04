@@ -1,0 +1,83 @@
+import {test,expect} from '@playwright/test';
+import AxeBuilder from '@axe-core/playwright';
+test('Language changes preserve the open artwork, filter, route and saved preference',async({page})=>{
+ await page.goto('/works?series=now&work=now-the-fragmented-self-jpg#main');
+ const dialog=page.getByRole('dialog');
+ await expect(dialog.locator('h1')).toHaveText('The Fragmented Self #1');
+ const image=await dialog.locator('img').getAttribute('src');
+ await dialog.getByRole('button',{name:'切換至繁體中文',exact:true}).click();
+ await expect(page.locator('html')).toHaveAttribute('lang','zh-Hant');
+ await expect(dialog.locator('h1')).toHaveText('破碎的自我 #1');
+ await expect(dialog.locator('img')).toHaveAttribute('src',image!);
+ expect(new URL(page.url()).searchParams.get('series')).toBe('now');
+ expect(new URL(page.url()).searchParams.get('work')).toBe('now-the-fragmented-self-jpg');
+ expect(new URL(page.url()).hash).toBe('#main');
+ await page.reload();
+ await expect(dialog.locator('h1')).toHaveText('破碎的自我 #1');
+ await page.keyboard.press('Escape');
+ await page.locator('.site-header').getByRole('link',{name:'評論',exact:true}).click();
+ await expect(page.locator('.review-sheet h2')).toHaveText('易凱在 Dolly Fiterman 畫廊');
+ await page.locator('.language-switch-floating').getByRole('button',{name:'Switch to English',exact:true}).click();
+ await expect(page.locator('html')).toHaveAttribute('lang','en');
+ await page.goto('/works');
+ await expect(page.locator('html')).toHaveAttribute('lang','en');
+});
+test('Biography and studio translations retain all source paragraphs and photographs',async({page})=>{
+ await page.emulateMedia({reducedMotion:'reduce'});
+ await page.goto('/about?read=biography&lang=zh-Hant');
+ const dialog=page.getByRole('dialog');
+ await expect(dialog.locator('h1')).toHaveText('關於易凱');
+ await expect(dialog.locator('.biography-paragraph')).toHaveCount(28);
+ await dialog.getByRole('button',{name:'Switch to English',exact:true}).click();
+ await expect(dialog.locator('h1')).toHaveText('About Yi Kai');
+ await expect(dialog.locator('.biography-paragraph')).toHaveCount(28);
+ await page.keyboard.press('Escape');
+ await page.locator('.language-switch-floating').getByRole('button',{name:'切換至繁體中文',exact:true}).click();
+ await page.locator('#studio-full-article summary').click();
+ await expect(page.locator('.studio-feature-fulltext p')).toHaveCount(30);
+ await expect(page.locator('.studio-feature-photoarchive img')).toHaveCount(17);
+ expect(await page.locator('.studio-feature-fulltext').innerText()).toMatch(/[\u3400-\u9fff]/);
+ await expect(page.locator('#special-collections')).toContainText('波莫納');
+});
+test('Memory reader switches language while preserving the chosen photograph',async({page})=>{
+ await page.goto('/memories?photo=houston-2026');
+ await expect(page.locator('.memory-display h2')).toHaveText('A family gathering');
+ await page.getByRole('button',{name:'Enlarge A family gathering',exact:true}).click();
+ const dialog=page.getByRole('dialog');const src=await dialog.locator('img').getAttribute('src');
+ await dialog.getByRole('button',{name:'切換至繁體中文',exact:true}).click();
+ await expect(dialog.locator('img')).toHaveAttribute('src',src!);
+ await expect(dialog).toContainText('林博士');
+ await expect(dialog).toContainText('休士頓');
+ await page.setViewportSize({width:390,height:844});
+ await expect(dialog.locator('.memory-screen-meta')).toContainText('德州休士頓');
+ await expect(dialog.locator('.language-switch button').last()).toHaveCSS('font-size','11px');
+ expect(await dialog.locator('.language-switch').evaluate(e=>e.scrollWidth<=e.clientWidth)).toBe(true);
+ await dialog.getByRole('button',{name:'Switch to English',exact:true}).click();
+ await expect(dialog).toContainText('Dr. Lin');
+ await expect(dialog.locator('img')).toHaveAttribute('src',src!);
+});
+for(const width of [320,390,900])test(`Traditional Chinese navigation and layout at ${width}px`,async({page})=>{
+ await page.setViewportSize({width,height:844});await page.emulateMedia({reducedMotion:'reduce'});
+ for(const route of ['/works?series=now','/collections','/reviews','/about']){
+  await page.goto(`${route}${route.includes('?')?'&':'?'}lang=zh-Hant`);
+  await expect(page.locator('html')).toHaveAttribute('lang','zh-Hant');
+  await expect(page.locator('.language-switch-floating')).toBeVisible();
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+ }
+ await page.locator('.site-menu-toggle').click();
+ const menu=page.getByRole('dialog');
+ await menu.getByRole('button',{name:'Switch to English',exact:true}).click();
+ await expect(menu.getByRole('link',{name:'Works',exact:true})).toBeVisible();
+ await menu.getByRole('button',{name:'切換至繁體中文',exact:true}).click();
+ await expect(menu.getByRole('link',{name:'作品',exact:true})).toBeVisible();
+ await page.keyboard.press('Escape');
+ await page.screenshot({path:`test-results/zh-mobile-${width}.png`});
+});
+test('Chinese review page remains accessible and switching survives disabled storage',async({page})=>{
+ await page.addInitScript(()=>{Storage.prototype.setItem=()=>{throw new DOMException('Disabled','SecurityError');};Storage.prototype.getItem=()=>{throw new DOMException('Disabled','SecurityError');};});
+ await page.goto('/reviews?lang=zh-Hant');
+ await expect(page.locator('.review-sheet')).toContainText('最具雄心');
+ expect((await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa']).analyze()).violations).toEqual([]);
+ await page.locator('.language-switch-floating').getByRole('button',{name:'Switch to English',exact:true}).click();
+ await expect(page.locator('.review-sheet')).toContainText('The most ambitious');
+});

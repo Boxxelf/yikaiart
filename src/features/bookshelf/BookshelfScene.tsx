@@ -1,3 +1,4 @@
+import {useTranslation} from '../../i18n/Locale';
 import { useEffect, useRef, type MutableRefObject } from 'react';
 import * as THREE from 'three';
 import gsap from 'gsap';
@@ -8,6 +9,7 @@ export type ShelfControl = { select: (id: string) => void; open: () => void; res
 type Props = { onSelect: (id: string | null) => void; onOpen: (id: string) => void; onHover: (id: string | null) => void; onFailure: () => void; controls: MutableRefObject<ShelfControl | null>; paused: boolean };
 type Book = { chapter: Chapter; group: THREE.Group; hinge: THREE.Group; baseX: number; height: number; depth: number };
 export default function BookshelfScene(props: Props) {
+  const {locale}=useTranslation();
   const root = useRef<HTMLDivElement>(null); const latest = useRef(props); latest.current = props;
   useEffect(() => {
     const host = root.current!; let dead = false; let renderer: THREE.WebGLRenderer;
@@ -24,7 +26,7 @@ export default function BookshelfScene(props: Props) {
     Object.assign(sun.shadow.camera, { left: -1000, right: 1000, top: 900, bottom: -600, near: .5, far: 4000 }); sun.shadow.bias = -.001; sun.shadow.radius = 5; scene.add(sun);
     const fill = new THREE.DirectionalLight(0xdde6f6, .9); fill.position.set(1200, 500, 600); scene.add(fill);
     const floor = new THREE.Mesh(new THREE.PlaneGeometry(6000, 4000), new THREE.ShadowMaterial({ color: 0x514638, opacity: .13 })); floor.rotation.x = -Math.PI / 2; floor.position.y = -4; floor.receiveShadow = true; scene.add(floor);
-    const textures: THREE.Texture[] = []; const texturesFor = (c: Chapter, kind: 'cover' | 'spine' | 'inside') => { const t = new THREE.CanvasTexture(bookSurface(c, kind)); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy()); textures.push(t); return t; };
+    const textures: THREE.Texture[] = []; const texturesFor = (c: Chapter, kind: 'cover' | 'spine' | 'inside') => { const t = new THREE.CanvasTexture(bookSurface(c, kind, locale)); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy()); textures.push(t); return t; };
     const books: Book[] = [];
     let totalWidth = chapters.reduce((sum, c) => sum + c.width + 14, 0) - 14;
     let cursor = -totalWidth / 2;
@@ -93,6 +95,6 @@ export default function BookshelfScene(props: Props) {
     const render = (time: number) => { if (dead) return; frame = requestAnimationFrame(render); if (document.hidden || latest.current.paused || time - last < 24) return; last = time; renderer.render(scene, camera); };
     frame = requestAnimationFrame(render);
     return () => { dead = true; cancelAnimationFrame(frame); observer.disconnect(); host.removeEventListener('pointermove', move); host.removeEventListener('pointerup', click); host.removeEventListener('pointerleave', leave); renderer.domElement.removeEventListener('webglcontextlost', lost); for (const b of books) { gsap.killTweensOf(b.group.position); gsap.killTweensOf(b.group.rotation); gsap.killTweensOf(b.hinge.rotation); } const disposed = new Set<unknown>(); scene.traverse(obj => { if (obj instanceof THREE.Mesh || obj instanceof THREE.LineSegments) { obj.geometry.dispose(); for (const m of Array.isArray(obj.material) ? obj.material : [obj.material]) if (!disposed.has(m)) { disposed.add(m); m.dispose(); } } }); textures.forEach(t => t.dispose()); renderer.dispose(); renderer.forceContextLoss(); renderer.domElement.remove(); props.controls.current = null; };
-  }, []);
+  }, [locale]);
   return <div className="bookshelf-canvas" ref={root} />;
 }
