@@ -16,7 +16,7 @@ export default function ChapterReader({ chapter, full = false, onChange, onClose
   useEffect(() => { text.current?.scrollTo(0, 0); }, [chapter.id, full]);
   const step = (delta: number) => onChange(chapters[(index + delta + 7) % 7].id);
   return <dialog ref={dialog} className="chapter-dialog" aria-label={t(full ? 'About Yi Kai — full biography' : `${chapter.spine} — ${chapter.title}`)} onCancel={e => { e.preventDefault(); onClose(); }} onClick={e => { if (e.target === dialog.current) onClose(); }} onKeyDown={e => { if (!full && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) { e.preventDefault(); step(e.key === 'ArrowRight' ? 1 : -1); } }}>
-    <LanguageSwitch/><button className="reader-close" onClick={onClose}>{t("Return to shelf ")}<span aria-hidden="true"><Icon name="close" /></span></button>
+    <header className="chapter-reader-top"><LanguageSwitch/><button className="reader-close" onClick={onClose}>{t("Return to shelf ")}<span aria-hidden="true"><Icon name="close" /></span></button></header>
     <aside className="reader-cover"><BookCover chapter={chapter} /><span>{t(chapter.number)}{t(" / 07")}</span></aside>
     <div className="reader-text" ref={text}><div className="reader-content">
       <p className="small-label">{t(full ? 'Chinese-American contemporary artist' : `${chapter.spine} / ${chapter.subtitle}`)}</p>

@@ -24,7 +24,7 @@ export default function ReviewArticle({review}:{review:Review;onImage?:()=>void}
   {review.textLabel&&<p className="review-text-label">{t(review.textLabel)}</p>}
   <div className="review-article-layout">
    {picture&&!review.scans&&<figure className="review-portrait"><img src={collectionAsset(picture.path)} alt={t(`Image accompanying the ${review.author} review`)} loading="lazy"/><figcaption>{t("From the review archive")}</figcaption></figure>}
-   {locale==='zh-Hant'&&<p className="translation-note">繁體中文譯文；原文可切換英文版或查看原始文獻。</p>}<div className="review-article-text" lang={locale}>{review.paragraphs.map((p,i)=><p key={i}>{t(p)}</p>)}<footer className="review-signature"><strong>{t(review.byline)}</strong><span>{t(review.role)}</span><span>{t(review.year)}</span></footer></div>
+   <div className="review-article-text" lang={locale}>{locale==='zh-Hant'&&<div className="translation-note" role="note">繁體中文譯文；原文可切換英文版或查看原始文獻。</div>}{review.paragraphs.map((p,i)=><p key={i}>{t(p)}</p>)}<footer className="review-signature"><strong>{t(review.byline)}</strong><span>{t(review.role)}</span><span>{t(review.year)}</span></footer></div>
   </div>
   {enlarged&&<ArchiveDialog label={enlarged.caption} className="press-image-reader" onClose={()=>setEnlarged(null)} opener={opener}><div className="press-image-toolbar"><p>{t(enlarged.caption)}</p><button aria-pressed={zoom} onClick={()=>setZoom(!zoom)}>{t(zoom?'Fit image':'Zoom image')}</button></div><div className={`press-image-viewport ${zoom?'is-zoomed':''}`} tabIndex={0}><img src={collectionAsset(enlarged.path)} alt={t(enlarged.alt)}/></div></ArchiveDialog>}
  </>;
