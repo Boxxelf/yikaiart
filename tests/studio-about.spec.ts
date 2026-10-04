@@ -13,7 +13,7 @@ for (const width of [390, 1440]) test(`About embeds four complete studio photogr
     expect(await photo.evaluate((img: HTMLImageElement) => Math.abs(img.clientWidth / img.clientHeight - img.naturalWidth / img.naturalHeight))).toBeLessThan(.015);
   }
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
-  await gallery.getByRole('button').first().click();
+  await gallery.locator('.studio-photograph button').first().click();
   const reader = page.getByRole('dialog', { name: 'Studio photographs' });
   await expect(reader).toBeVisible();
   await expect.poll(() => reader.locator('img').evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth > 0)).toBe(true);
@@ -25,7 +25,7 @@ for (const width of [390, 1440]) test(`About embeds four complete studio photogr
   expect((await new AxeBuilder({ page }).withTags(['wcag2a','wcag2aa']).analyze()).violations).toEqual([]);
   await page.keyboard.press('Escape');
   await expect(reader).toHaveCount(0);
-  await expect(gallery.getByRole('button').first()).toBeFocused();
+  await expect(gallery.locator('.studio-photograph button').first()).toBeFocused();
   await gallery.screenshot({ path: `test-results/studio-about-${width}.png` });
   await page.goto('/memories');
   await expect(page.getByText(/Waiting for a moment/i)).toHaveCount(0);

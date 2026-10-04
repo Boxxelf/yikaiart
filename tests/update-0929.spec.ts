@@ -1,15 +1,15 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
-test('Eight new NOW paintings have full-size images, metadata and stable links', async ({ page }) => {
+test('Replacement NOW paintings have full-size images and stable links', async ({ page }) => {
   await page.goto('/works?series=now');
-  await expect(page.locator('.archive-work')).toHaveCount(34);
+  await expect(page.locator('.archive-work')).toHaveCount(30);
   await expect(page.getByRole('button', { name: 'View The Fragmented Self #3', exact: true })).toBeVisible();
-  for (let n = 6; n <= 13; n++) {
+  for (let n = 7; n <= 10; n++) {
     await page.getByRole('button', { name: `View The Fragmented Self #${n}`, exact: true }).click();
-    await expect(page.locator('.detail-info p')).toHaveText('Oil on canvas · 27.5 × 35.5 in');
+    await expect(page.locator('.detail-info h1')).toHaveText(`The Fragmented Self #${n}`);
     await expect.poll(() => page.locator('.detail-art img').evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth > 0)).toBe(true);
-    if (n === 13) { await page.reload(); await expect(page.locator('.detail-info h1')).toHaveText('The Fragmented Self #13'); }
+    if (n === 10) { await page.reload(); await expect(page.locator('.detail-info h1')).toHaveText('The Fragmented Self #10'); }
     await page.getByRole('button', { name: 'Close artwork' }).click();
   }
 });

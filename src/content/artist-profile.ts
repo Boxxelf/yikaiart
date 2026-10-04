@@ -93,8 +93,6 @@ export const careerSections = [
  ]},
  {id:'teaching',title:'Teaching',items:[
  '2017 – 2020 Working as faculty member in Claremont Graduate University, CA',
- '1988 – 1990 Central University for Nationalities, Beijing',
- '1983 – 1985 PLA Art College',
  '2021 Chan Gallery, Pomona College, Claremont, CA',
  '2019 Guangzhou Academy of Fine Arts, China',
  '2018 Tianjin Academy of Fine Art, P.R of China',
@@ -108,6 +106,8 @@ export const careerSections = [
  '2008 University of Minnesota, MN',
  '2002 University of St Thomas, Minneapolis, MN',
  '1997 University of Singapore, Singapore',
- '1991 University of Minnesota, St Paul, MN'
+ '1991 University of Minnesota, St Paul, MN',
+ '1988 – 1990 Central University for Nationalities, Beijing',
+ '1983 – 1985 PLA Art College'
  ]}
 ];

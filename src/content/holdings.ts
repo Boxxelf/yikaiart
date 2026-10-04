@@ -1,7 +1,8 @@
 import collectionData from './holdings.json';
 import archiveData from './collection-archive.json';
 export type HoldingCategory='institution'|'gallery'|'corporate'|'private'|'archive';
-export type Holding={id:string;title:string;kind:'holding'|'archive';category:HoldingCategory;collector:string;location:string;medium:string;dimensions:string;date:string;description:string;documentType?:string;source:string;sourceFilename:string;alt:string;image:{thumbnail:string;display:string;width:number;height:number}};
+export type CompanionArtwork={title:string;alt:string;sourceFilename:string;image:{thumbnail:string;display:string;width:number;height:number}};
+export type Holding={companion?:CompanionArtwork;id:string;title:string;kind:'holding'|'archive';category:HoldingCategory;collector:string;location:string;medium:string;dimensions:string;date:string;description:string;documentType?:string;source:string;sourceFilename:string;alt:string;image:{thumbnail:string;display:string;width:number;height:number}};
 export const holdings=collectionData as Holding[];
 export const collectionArchive=archiveData as Holding[];
 export const allHoldings=[...holdings,...collectionArchive];

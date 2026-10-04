@@ -6,13 +6,13 @@ import { reviews } from '../src/content/reviews';
 
 test('Reviews: every author, reader navigation, deep links and focus restoration', async ({page})=>{
  await page.goto('/reviews');
- await expect(page.locator('.review-index button')).toHaveCount(13);
- for(const review of reviews){
-  await page.locator('.review-index').getByRole('button',{name:new RegExp(review.author)}).click();
-  await expect(page.locator('.review-sheet-author h2')).toHaveText(review.author);
+ await expect(page.locator('.review-index button')).toHaveCount(18);
+ for(const [index,review] of reviews.entries()){
+  await page.locator('.review-index button').nth(index).click();
+  await expect(page.locator('.review-sheet-author h2')).toHaveText(review.title||review.author);
   await expect(page.locator('.review-article-text > p')).toHaveText(review.paragraphs);
   await expect(page.locator('.review-signature')).toContainText(review.byline);
-  await expect.poll(()=>page.locator('.review-portrait img').evaluate((img:HTMLImageElement)=>img.complete&&img.naturalWidth>0)).toBe(true);
+  await expect.poll(()=>page.locator('.review-sheet img').first().evaluate((img:HTMLImageElement)=>img.complete&&img.naturalWidth>0)).toBe(true);
  }
  const open=page.getByRole('button',{name:'Read perspective'});
  await open.click();
@@ -31,11 +31,11 @@ test('Reviews: every author, reader navigation, deep links and focus restoration
 test('Collections: filters, full image, deep-link refresh and return focus',async({page})=>{
  await page.goto('/collections');
  await expect(page.locator('.holding-card')).toHaveCount(16);
- await expect(page.locator('.collection-document')).toHaveCount(10);
+ await expect(page.locator('.collection-document')).toHaveCount(6);
  for(const [name,count] of [['Museums & Universities',4],['Galleries',1],['Corporate & Hospitality',8],['Private',3]] as const){
   await page.getByRole('button',{name:new RegExp('^'+name)}).click();
   await expect(page.locator('.holding-card')).toHaveCount(count);
-  await expect(page.locator('.collection-document')).toHaveCount(10);
+  await expect(page.locator('.collection-document')).toHaveCount(6);
  }
  await page.reload();await expect(page.locator('.holding-card')).toHaveCount(3);
  const opener=page.locator('.holding-card').first();await opener.click();
@@ -48,7 +48,7 @@ test('Collections: filters, full image, deep-link refresh and return focus',asyn
  await page.keyboard.press('Escape');await opener.click();await page.keyboard.press('Escape');await expect(opener).toBeFocused();
 });
 
-test('All ten supplied archive images have readable English captions and valid large assets',async({page})=>{
+test('All six collection archive images have readable English captions and valid large assets',async({page})=>{
  for(const item of archive){
   await page.goto(`/collections?collection=${item.id}`);
   const dialog=page.getByRole('dialog');

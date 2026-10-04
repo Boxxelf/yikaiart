@@ -1,0 +1,51 @@
+[
+  {
+    "sourceFilename": "IMG_8042.jpeg",
+    "width": 2763,
+    "height": 3697,
+    "thumbnail": "reviews/scan-8042-680.webp",
+    "display": "reviews/scan-8042-2400.webp"
+  },
+  {
+    "sourceFilename": "IMG_8043.jpeg",
+    "width": 2825,
+    "height": 2289,
+    "thumbnail": "reviews/scan-8043-680.webp",
+    "display": "reviews/scan-8043-2400.webp"
+  },
+  {
+    "sourceFilename": "IMG_8044.jpeg",
+    "width": 1815,
+    "height": 2600,
+    "thumbnail": "reviews/scan-8044-680.webp",
+    "display": "reviews/scan-8044-2400.webp"
+  },
+  {
+    "sourceFilename": "IMG_8045.jpeg",
+    "width": 2606,
+    "height": 3549,
+    "thumbnail": "reviews/scan-8045-680.webp",
+    "display": "reviews/scan-8045-2400.webp"
+  },
+  {
+    "sourceFilename": "IMG_8046.jpeg",
+    "width": 2444,
+    "height": 3561,
+    "thumbnail": "reviews/scan-8046-680.webp",
+    "display": "reviews/scan-8046-2400.webp"
+  },
+  {
+    "sourceFilename": "IMG_8047.jpeg",
+    "width": 2554,
+    "height": 3572,
+    "thumbnail": "reviews/scan-8047-680.webp",
+    "display": "reviews/scan-8047-2400.webp"
+  },
+  {
+    "sourceFilename": "IMG_8048.jpeg",
+    "width": 2618,
+    "height": 3640,
+    "thumbnail": "reviews/scan-8048-680.webp",
+    "display": "reviews/scan-8048-2400.webp"
+  }
+]

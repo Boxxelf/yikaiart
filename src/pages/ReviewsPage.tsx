@@ -1,7 +1,7 @@
 import Icon from '../components/Icon';
 import { useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { firstReview, reviews } from '../content/reviews';
+import { firstReview, reviews, reviewLabel } from '../content/reviews';
 import ReviewReader from '../components/ReviewReader';
 import ReviewArticle from '../features/editorial/ReviewArticle';
 import '../styles/editorial.css';
@@ -19,11 +19,11 @@ export default function ReviewsPage(){
   <header className="editorial-heading"><span className="editorial-eyebrow">Words around the work / 1987 — 2015</span><h1>Reviews<span>.</span></h1><p>Perspectives on a life in painting.</p></header>
   {requested&&!reviews.some(r=>r.id===requested)&&<p className="editorial-notice" role="status">That perspective could not be found. Explore the reviews below.</p>}
   <div className="reviews-desk">
-   <nav className="review-index" aria-label="Choose a review">{reviews.map((r,i)=><button key={r.id} aria-current={r.id===review.id?'true':undefined} onClick={()=>choose(r.id)}><span>{i===0||reviews[i-1].year!==r.year?r.year:''}</span><span>{r.author}</span></button>)}</nav>
-   <label className="review-mobile-select">Choose a perspective<select value={review.id} onChange={e=>choose(e.target.value)}>{reviews.map(r=><option key={r.id} value={r.id}>{r.year} — {r.author}</option>)}</select></label>
+   <nav className="review-index" aria-label="Choose a review">{reviews.map((r,i)=><button key={r.id} aria-current={r.id===review.id?'true':undefined} onClick={()=>choose(r.id)}><span>{i===0||reviews[i-1].year!==r.year?r.year:''}</span><span>{reviewLabel(r)}</span></button>)}</nav>
+   <label className="review-mobile-select">Choose a perspective<select value={review.id} onChange={e=>choose(e.target.value)}>{reviews.map(r=><option key={r.id} value={r.id}>{r.year} — {reviewLabel(r)}</option>)}</select></label>
    <div className="review-paper-stack"><article ref={sheet} className="review-sheet newspaper" key={review.id} aria-label={`Perspective by ${review.author}`}>
     <ReviewArticle review={review} onImage={open}/><button className="editorial-text-button" onClick={open}>Read perspective <span aria-hidden="true"><Icon name="diagonal" /></span></button>
-   </article><nav className="editorial-pagination" aria-label="Turn review pages"><button aria-label="Previous review" onClick={()=>choose(reviews[(index-1+reviews.length)%reviews.length].id)}><Icon name="left" /></button><span>Thirteen perspectives</span><button aria-label="Next review" onClick={()=>choose(reviews[(index+1)%reviews.length].id)}><Icon name="right" /></button></nav></div>
+   </article><nav className="editorial-pagination" aria-label="Turn review pages"><button aria-label="Previous review" onClick={()=>choose(reviews[(index-1+reviews.length)%reviews.length].id)}><Icon name="left" /></button><span>{reviews.length} perspectives</span><button aria-label="Next review" onClick={()=>choose(reviews[(index+1)%reviews.length].id)}><Icon name="right" /></button></nav></div>
   </div>
   <footer className="editorial-footer"><span>From the archive of Yi Kai</span><span>© {new Date().getFullYear()} Yi Kai</span></footer>
   {reading&&<ReviewReader review={review} onChange={choose} onClose={close} opener={opener}/>}

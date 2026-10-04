@@ -133,3 +133,7 @@ Regenerate the review pack with `node scripts/generate-review-pack.mjs /path/to/
 ### September 29 publication
 
 The four supplied studio photographs now appear within `/about#studio`, between the bookshelf and artist statement. There is no separate Studio route or navigation item. Desktop uses an asymmetric photo layout; mobile preserves full proportions in a vertical sequence. Each image opens a keyboard-accessible reader. The idle Memories label has been removed. Source updates are committed to `main`; Vercel automatically builds production from `main` at `https://yikaistudio.com/`; `gh-pages` is also synchronized as the static publication.
+
+### October 3 update
+
+The current catalogue contains **117 works** (30 in NOW), with The Fragmented Self numbered consecutively **#1–10**. Reviews now has **18 entries**, including four migrated publications, the supplied ARTnews cover/review and the Asian Art News feature. Collections retains six archive documents, with the two exhibition certificates paired with their paintings. About includes a Los Angeles Times home/studio feature with the article, 17 photographs and the original PDF. See [update notes](docs/1003-update.md) for the source mapping and publication details.

@@ -2,7 +2,8 @@ import fs from 'node:fs/promises';
 import assert from 'node:assert/strict';
 import sharp from 'sharp';
 const read=async name=>JSON.parse(await fs.readFile(`src/content/${name}.json`,'utf8'));
-const holdings=await read('holdings'), archive=await read('collection-archive');
+const holdings=await read('holdings'), collectionArchive=await read('collection-archive'), press=await read('press-archive'), archive=[...collectionArchive,...press];
+assert.equal(collectionArchive.length,6);assert.equal(press.length,4);
 assert.equal(holdings.length,16);assert.equal(archive.length,10);
 const items=[...holdings,...archive];assert.equal(new Set(items.map(i=>i.id)).size,26);
 assert.deepEqual(archive.map(i=>i.sourceFilename).sort(),Array.from({length:10},(_,i)=>`${182+i}.jpg`));
@@ -18,7 +19,16 @@ for(const item of items){
   assert.ok(Math.max(meta.width,meta.height)<=(size==='thumbnail'?680:1800));
  }
 }
-console.log('Validated 16 collection records, 10 English archive descriptions and 52 image assets.');
+for(const item of collectionArchive.filter(x=>x.companion)){
+ for(const size of ['thumbnail','display']){const m=await sharp(await fs.readFile(`public/${item.companion.image[size]}`)).metadata();assert.ok(m.width&&m.height);}
+}
+assert.equal(collectionArchive.filter(x=>x.companion).length,2);
+const scans=await read('press-scans');assert.equal(scans.length,7);
+for(const s of scans){const m=await sharp(await fs.readFile(`public/${s.display}`)).metadata();assert.ok(m.width&&m.height);}
+const feature=await read('la-times');assert.equal(feature.photos.length,17);assert.ok(feature.paragraphs.length>=30);
+for(const p of feature.photos){const m=await sharp(await fs.readFile(`public/${p.path}`)).metadata();assert.ok(m.width&&m.height);}
+assert.ok((await fs.stat('public/documents/la-times-2025.pdf')).size>0);
+console.log('Validated collections, migrated press, companion artworks, magazine scans and the LA Times feature.');
 const reviewImages=await read('review-images');
 assert.equal(reviewImages.length,13);
 assert.equal(new Set(reviewImages.map(i=>i.id)).size,13);

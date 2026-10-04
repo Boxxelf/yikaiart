@@ -4,12 +4,14 @@ const works=JSON.parse(await fs.readFile('src/content/works.generated.json','utf
 const memories=JSON.parse(await fs.readFile('src/content/memories.json','utf8'));
 const holdings=JSON.parse(await fs.readFile('src/content/holdings.json','utf8'));
 const archive=JSON.parse(await fs.readFile('src/content/collection-archive.json','utf8'));
+const press=JSON.parse(await fs.readFile('src/content/press-archive.json','utf8'));
+const companions=archive.filter(x=>x.companion).map(x=>x.companion);
 // Copy the validated catalogues, avoiding unreferenced sync-conflict duplicates.
 // Originals and duplicate files on disk are left untouched.
 const images=new Set([
  ...works.flatMap(w=>[w.image.thumbnail,w.image.medium,w.image.display]),
  ...memories.flatMap(m=>[m.image.thumbnail,m.image.display]),
- ...[...holdings,...archive].flatMap(m=>[m.image.thumbnail,m.image.display]),
+ ...[...holdings,...archive,...press,...companions].flatMap(m=>[m.image.thumbnail,m.image.display]),
 ]);
 await fs.mkdir('dist',{recursive:true});
 // Read/write bytes explicitly: copyFile's macOS clone path can stall inside

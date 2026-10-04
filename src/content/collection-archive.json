@@ -46,98 +46,6 @@
     }
   },
   {
-    "id": "archive-historic-preservation",
-    "title": "A working studio in print",
-    "date": "1993",
-    "category": "archive",
-    "documentType": "Magazine spread",
-    "kind": "archive",
-    "description": "A spread from the September–October 1993 issue of Historic Preservation. A photograph shows Yi Kai working among paintings, books and studio furniture in a brick-walled loft. The preserved pages document the everyday setting of his practice alongside a feature on artists’ live-and-work spaces.",
-    "medium": "",
-    "dimensions": "",
-    "collector": "",
-    "location": "",
-    "source": "",
-    "sourceFilename": "184.jpg",
-    "alt": "A working studio in print — archival photograph",
-    "reviewNotes": "English introduction based on the supplied image and legible captions. Collection ownership is not inferred.",
-    "image": {
-      "thumbnail": "collections/archive-historic-preservation-thumb.webp",
-      "display": "collections/archive-historic-preservation-display.webp",
-      "width": 1508,
-      "height": 1034
-    }
-  },
-  {
-    "id": "archive-gallery-guide-west",
-    "title": "A profile at Museum West",
-    "date": "1998",
-    "category": "archive",
-    "documentType": "Magazine spread",
-    "kind": "archive",
-    "description": "The December 1998 West Coast edition of Art Now Gallery Guide profiles Yi Kai at Museum West Fine Art. The page pairs a reproduction of Words in Mixture with discussion of his materials and cultural influences. The artist profile is preserved beside the magazine’s cover.",
-    "medium": "",
-    "dimensions": "",
-    "collector": "",
-    "location": "",
-    "source": "",
-    "sourceFilename": "185.jpg",
-    "alt": "A profile at Museum West — archival photograph",
-    "reviewNotes": "English introduction based on the supplied image and legible captions. Collection ownership is not inferred.",
-    "image": {
-      "thumbnail": "collections/archive-gallery-guide-west-thumb.webp",
-      "display": "collections/archive-gallery-guide-west-display.webp",
-      "width": 1375,
-      "height": 1096
-    }
-  },
-  {
-    "id": "archive-china-times",
-    "title": "An artist profile in China Times Weekly",
-    "date": "1993",
-    "category": "archive",
-    "documentType": "Magazine spread",
-    "kind": "archive",
-    "description": "This April 4–10, 1993 issue of China Times Weekly brings together an artist photograph, a large painting reproduction and a Chinese-language profile. The preserved spread documents contemporary coverage of Yi Kai’s developing practice in the United States.",
-    "medium": "",
-    "dimensions": "",
-    "collector": "",
-    "location": "",
-    "source": "",
-    "sourceFilename": "186.jpg",
-    "alt": "An artist profile in China Times Weekly — archival photograph",
-    "reviewNotes": "English introduction based on the supplied image and legible captions. Collection ownership is not inferred.",
-    "image": {
-      "thumbnail": "collections/archive-china-times-thumb.webp",
-      "display": "collections/archive-china-times-display.webp",
-      "width": 1571,
-      "height": 1072
-    }
-  },
-  {
-    "id": "archive-gallery-guide-midwest",
-    "title": "On the cover: Dolly Fiterman Fine Arts",
-    "date": "1999",
-    "category": "archive",
-    "documentType": "Magazine spread",
-    "kind": "archive",
-    "description": "The June–August 1999 Chicago/Midwest edition of Art Now Gallery Guide features Yi Kai’s work on its cover. The facing page introduces his exhibition at Dolly Fiterman Fine Arts and reproduces another painting, placing the two works alongside a discussion of cultural exchange.",
-    "medium": "",
-    "dimensions": "",
-    "collector": "",
-    "location": "",
-    "source": "",
-    "sourceFilename": "187.jpg",
-    "alt": "On the cover: Dolly Fiterman Fine Arts — archival photograph",
-    "reviewNotes": "English introduction based on the supplied image and legible captions. Collection ownership is not inferred.",
-    "image": {
-      "thumbnail": "collections/archive-gallery-guide-midwest-thumb.webp",
-      "display": "collections/archive-gallery-guide-midwest-display.webp",
-      "width": 1414,
-      "height": 1138
-    }
-  },
-  {
     "id": "archive-man-wearing-flag",
     "title": "A portrait and its exhibition history",
     "date": "2002",
@@ -181,6 +89,17 @@
       "display": "collections/archive-shepherd-girl-certificate-display.webp",
       "width": 1194,
       "height": 1180
+    },
+    "companion": {
+      "title": "Shepherd Girl",
+      "alt": "Shepherd Girl, the artwork shown alongside its exhibition certificate.",
+      "sourceFilename": "牧羊姑娘.jpg",
+      "image": {
+        "width": 1200,
+        "height": 1163,
+        "thumbnail": "collections/archive-shepherd-girl-certificate-artwork-680.webp",
+        "display": "collections/archive-shepherd-girl-certificate-artwork-1800.webp"
+      }
     }
   },
   {
@@ -204,6 +123,17 @@
       "display": "collections/archive-kashgar-certificate-display.webp",
       "width": 1103,
       "height": 1143
+    },
+    "companion": {
+      "title": "Impressions of Id Kah Square",
+      "alt": "Impressions of Id Kah Square, the artwork shown alongside its exhibition certificate.",
+      "sourceFilename": "Impressions of Id Kah Square.jpg",
+      "image": {
+        "width": 3568,
+        "height": 2514,
+        "thumbnail": "collections/archive-kashgar-certificate-artwork-680.webp",
+        "display": "collections/archive-kashgar-certificate-artwork-1800.webp"
+      }
     }
   },
   {
