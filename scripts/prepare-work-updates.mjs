@@ -20,7 +20,7 @@ export async function prepareWorks(root = process.cwd()) {
   const generatedArt = path.join(root, 'public/art/updates');
   await fs.mkdir(publicPackets, { recursive: true });
   await fs.mkdir(generatedArt, { recursive: true });
-  const additions = [];
+  const updates = [];
   const packets = (await fs.readdir(directory)).filter(name => name.toLowerCase().endsWith('.json')).sort();
   for (const filename of packets) {
     try {
@@ -29,6 +29,7 @@ export async function prepareWorks(root = process.cwd()) {
       const raw = await fs.readFile(file, 'utf8');
       const packet = JSON.parse(raw);
       check(packet.version === 1, '更新文件版本不支持，请重新生成');
+      check(packet.updatedAt === undefined || (typeof packet.updatedAt === 'string' && /^\d{4}-\d{2}-\d{2}T/.test(packet.updatedAt) && Number.isFinite(Date.parse(packet.updatedAt))), '更新时间无效，请重新生成');
       check(typeof packet.id === 'string' && /^[a-z0-9][a-z0-9-]{2,119}$/.test(packet.id), '作品编号无效');
       check(filename === `${packet.id}.json`, '文件名已被更改。请保持原文件名，不要加 (1) 或其他后缀');
       const original = byId.get(packet.id);
@@ -63,7 +64,7 @@ export async function prepareWorks(root = process.cwd()) {
       }
       check(image, '新增作品缺少图片，请选择照片后重新下载更新文件');
       const work = { ...original, id: packet.id, sourceFilename: original?.sourceFilename || `${packet.id}.jpg`, sourceFolder: original?.sourceFolder || 'Owner updates', collectionId: packet.collectionId, displayTitle, medium, dimensions, dimensionSource: 'Artist-provided website update.', updateRevision: revision, image: { ...image, alt: `${displayTitle}, ${medium.toLowerCase()} by Yi Kai, ${dimensions}.` } };
-      if (original) byId.set(work.id, work); else additions.push(work);
+      updates.push({ work, updatedAt: packet.updatedAt ? Date.parse(packet.updatedAt) : 0 });
       await fs.writeFile(path.join(publicPackets, filename), raw);
     } catch (error) { throw new Error(`作品更新文件 ${filename}: ${error.message}`); }
   }
@@ -71,8 +72,10 @@ export async function prepareWorks(root = process.cwd()) {
   for (const filename of await fs.readdir(publicPackets)) {
     if (filename.endsWith('.json') && !packets.includes(filename)) await fs.unlink(path.join(publicPackets, filename));
   }
-  // New works appear first. Existing links and the twelve Home selections stay intact.
-  const works = [...additions.reverse(), ...base.map(work => byId.get(work.id))];
+  // New and revised works lead each collection, newest first. Legacy packets keep a deterministic filename order.
+  updates.sort((a, b) => b.updatedAt - a.updatedAt || b.work.id.localeCompare(a.work.id));
+  const updatedIds = new Set(updates.map(({ work }) => work.id));
+  const works = [...updates.map(({ work }) => work), ...base.filter(work => !updatedIds.has(work.id))];
   check(new Set(works.map(work => work.id)).size === works.length, '作品编号重复');
   await fs.writeFile(path.join(root, 'src/content/works.generated.json'), JSON.stringify(works, null, 2) + '\n');
   console.log(`Prepared ${works.length} works from ${base.length} original works and ${packets.length} owner update files.`);

@@ -52,7 +52,7 @@ test('Fragmented Self has ten ordered works and teaching history retains the mov
  await page.goto('/works?series=now');
  await expect(page.locator('.archive-work')).toHaveCount(30);
  const titles=await page.locator('.archive-work').allTextContents();
- const numbered=titles.filter(t=>t.includes('The Fragmented Self'));
+ const numbered=titles.slice(0,10);
  expect(numbered).toHaveLength(10);
  for(let i=1;i<=10;i++)expect(numbered[i-1]).toContain(`The Fragmented Self #${i}`);
  await page.goto('/about');

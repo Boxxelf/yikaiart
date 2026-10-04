@@ -5,7 +5,7 @@ import { collections } from '../content/collections';
 import '../styles/works-editor.css';
 
 const uploadUrl = 'https://github.com/Boxxelf/yikaiart/upload/main/content/works-updates';
-type Packet = { version: 1; id: string; displayTitle: string; collectionId: string; medium: string; size: { height: number; width: number; unit: 'in' | 'cm' }; imageDataUrl?: string };
+type Packet = { version: 1; updatedAt?: string; id: string; displayTitle: string; collectionId: string; medium: string; size: { height: number; width: number; unit: 'in' | 'cm' }; imageDataUrl?: string };
 async function readPhoto(file: File): Promise<string> {
   if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) throw new Error('请选择 JPG、PNG 或 WebP 图片。iPhone 的 HEIC 照片请先导出为 JPEG。');
   if (file.size > 40 * 1024 * 1024) throw new Error('这张照片超过 40 MB，请先导出一张较小的 JPEG。');
@@ -96,7 +96,7 @@ export default function WorksEditorPage() {
     if (!imageData && !current) { setError('新增作品需要先选择一张照片。'); return; }
     if (/[\u3400-\u9fff]/.test(title)) { setError('网站以英文展示作品，请填写英文作品名。'); return; }
     if (mode === 'new' && works.some(work => work.displayTitle.toLowerCase().trim() === title.toLowerCase().trim())) { setError('网站已有同名作品。请在第一步选择“修改已有作品”，避免重复添加。'); return; }
-    const packet: Packet = { version: 1, id: current?.id || newId.current, displayTitle: title.trim(), collectionId, medium: medium.trim(), size: { height: Number(height), width: Number(width), unit }, ...(imageData ? { imageDataUrl: imageData } : {}) };
+    const packet: Packet = { version: 1, updatedAt: new Date().toISOString(), id: current?.id || newId.current, displayTitle: title.trim(), collectionId, medium: medium.trim(), size: { height: Number(height), width: Number(width), unit }, ...(imageData ? { imageDataUrl: imageData } : {}) };
     const blob = new Blob([JSON.stringify(packet, null, 2) + '\n'], { type: 'application/json' });
     const url = URL.createObjectURL(blob); const link = document.createElement('a');
     link.href = url; link.download = `${packet.id}.json`; document.body.append(link); link.click(); link.remove();
@@ -115,7 +115,7 @@ export default function WorksEditorPage() {
         {!ready && <p className="editor-notice">请先在上面选择一件已有作品。</p>}
         <fieldset disabled={!ready || busy} className="editor-fields"><legend className="editor-sr-only">作品资料</legend>
           <div className="editor-photo-field"><span>作品照片{mode === 'edit' ? '（需要换图时再选）' : '（必选）'}</span><button className="editor-photo-button" type="button" onClick={() => fileInput.current?.click()}>选择作品照片</button><input className="editor-file" ref={fileInput} aria-label={mode === 'edit' ? '作品照片（需要换图时再选）' : '作品照片（必选）'} type="file" accept="image/jpeg,image/png,image/webp" onChange={e => void selectPhoto(e.target.files?.[0])}/><small>使用 JPG、PNG 或 WebP。照片会自动缩小，您的原图不会改变。</small></div>
-          <label>英文作品名<input required maxLength={180} value={title} onChange={e => { setTitle(e.target.value); changed(); }} placeholder="例如：The Fragmented Self #14"/></label>
+          <label>英文作品名<input required maxLength={180} value={title} onChange={e => { setTitle(e.target.value); changed(); }} placeholder="例如：The Fragmented Self #11"/></label>
           <label>作品系列<select value={collectionId} onChange={e => { setCollectionId(e.target.value); changed(); }}>{collections.map(c => <option key={c.id} value={c.id}>{c.label}</option>)}</select><small>最近的新作品通常选择 NOW。</small></label>
           <label>材料<input required maxLength={140} value={medium} onChange={e => { setMedium(e.target.value); changed(); }} list="medium-options"/><small>布面油画填写 Oil on canvas。</small></label><datalist id="medium-options"><option value="Oil on canvas"/><option value="Acrylic on canvas"/><option value="Mixed media on canvas"/><option value="Ink on paper"/></datalist>
           <div className="editor-size"><label>作品高度<input type="number" required min="0.01" max="10000" step="any" inputMode="decimal" value={height} onChange={e => { setHeight(e.target.value); changed(); }} placeholder="例如 27.5"/></label><label>作品宽度<input type="number" required min="0.01" max="10000" step="any" inputMode="decimal" value={width} onChange={e => { setWidth(e.target.value); changed(); }} placeholder="例如 35.5"/></label><label>尺寸单位<select value={unit} onChange={e => { setUnit(e.target.value as 'in' | 'cm'); changed(); }}><option value="in">英寸 in</option><option value="cm">厘米 cm</option></select></label></div><p>填写画作本身的实际尺寸：高在前，宽在后。例如 27.5 × 35.5 英寸；不要填写照片像素。</p>
