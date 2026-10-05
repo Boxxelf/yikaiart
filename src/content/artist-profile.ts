@@ -29,6 +29,7 @@ export const careerSections = [
  'Beijing Art Institute, China'
  ]},
  {id:'group-exhibitions',title:'Group Exhibitions',items:[
+ '2026 Accepted by the First Street Gallery in New York as Out Town member.',
  '2026 825 Gallery, Los Angeles Art Association (LAAA)',
  '2023 Mirror Garden Art Museum, Tianjin, China',
  '2023 ATTN Art Gallery, Guangzhou, China',
