@@ -9,6 +9,7 @@ import './styles/global.css';
 import './styles/i18n.css';
 import LanguageSwitch from './components/LanguageSwitch';
 import SiteNavigation from './components/SiteNavigation';
+import BackToTop from './components/BackToTop';
 const WorksEditorPage = lazy(() => import('./pages/WorksEditorPage'));
 const WorksPage = lazy(() => import('./pages/WorksPage'));
 const MemoriesPage = lazy(() => import('./pages/MemoriesPage'));
@@ -29,7 +30,7 @@ function Site() {
     </header>
     <LanguageSwitch floating/><Suspense fallback={<main id="main" className="page-loading" aria-live="polite">{t("Opening the archive…")}</main>}>
       <Routes><Route path="/works-editor" element={<WorksEditorPage />} /><Route path="/" element={<WorksPage key="home" home />} /><Route path="/works" element={<WorksPage key="archive" />} /><Route path="/memories" element={<MemoriesPage />} /><Route path="/reviews" element={<ReviewsPage/>}/><Route path="/collections" element={<CollectionsPage/>}/><Route path="/about" element={<AboutPage />} /><Route path="*" element={<Navigate to="/" replace />} /></Routes>
-    </Suspense>
+    </Suspense><BackToTop />
   </div>;
 }
 ReactDOM.createRoot(document.getElementById('root')!).render(<React.StrictMode><BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, '') || '/'}><LocaleProvider><Site /></LocaleProvider></BrowserRouter></React.StrictMode>);
